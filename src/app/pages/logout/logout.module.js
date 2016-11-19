@@ -1,7 +1,4 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
+
 (function () {
   'use strict';
 
@@ -20,32 +17,19 @@
             icon: 'ion-android-home',
             order: 0,
           },
-           controller: function($scope,$location,$cookieStore,$cookies){
+           controller: function($scope,$location){
          //  $scope.title = 'My Contacts';
 
            $scope.logout = function()
           {
             console.log("clicked logout");
-            $cookies.remove("email");
-            $cookies.remove("password");
-          
 
-           console.log($cookies.getAll().email);
-            console.log($cookies.getAll().password);
-            $cookies.put ("loggedIn", "false");
-               
+            /**
+                Make http call here
+            */
             }
-
              $scope.logout();
-
           }  
-
-
-
-
-
-
-
           
         });
   }

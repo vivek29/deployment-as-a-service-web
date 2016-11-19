@@ -1,7 +1,4 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
+
 (function () {
   'use strict';
 
@@ -20,40 +17,20 @@
             icon: 'ion-android-home',
             order: 0,
           },
-           controller: function($scope,$location,$cookieStore,$cookies){
-         //  $scope.title = 'My Contacts';
+           controller: function($scope,$location){
 
            $scope.login = function(user)
           {
             console.log("clicked login");
             console.log(user);
-            var formUser = user.username;
+            var formEmail = user.email;
             var formPassword = user.password;
 
-           console.log($cookies.getAll().email);
-            console.log($cookies.getAll().password);
-            var email =   $cookies.getAll().email;
-            var password = $cookies.getAll().password;
-
-
-            if (email === formUser  && password === formPassword){
-              $cookies.put ("loggedIn", "true");
-             $location.path("/dashboard");
-
-            }
-            else{
-               $cookies.put ("loggedIn", "false");
-                alert('email and password does not match !');
-
-            }
-
+            /**
+                Make http call here. if success next page
+                 $location.path("/dashboard");
+            */
           }  
-
-
-
-
-
-
 
           }
         });

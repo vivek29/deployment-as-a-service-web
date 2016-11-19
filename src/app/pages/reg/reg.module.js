@@ -1,7 +1,4 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
+
 (function () {
   'use strict';
 
@@ -19,17 +16,13 @@
             icon: 'ion-android-home',
             order: 0,
           },
-          controller: function($scope,$location,$cookieStore,$cookies){
-           //$scope.title = 'My Contacts';
+          controller: function($scope,$location){
 
            $scope.register = function(user)
           {
             console.log("clicked register");
-
-            $cookies.put ("email", user.username);
-            $cookies.put ("password", user.password);
-            $location.path("/login");
-
+            // make http call here,
+            // $location.path("/login");
           }
         }
         });

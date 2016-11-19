@@ -10,14 +10,14 @@
         <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 
         <div class="col-sm-10">
-          <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email"  ng-model="user.username">
+          <input type="email" class="form-control" id="inputEmail3" placeholder="Enter your Email Id" name="email"  ng-model="user.email">
         </div>
       </div>
       <div class="form-group">
         <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 
         <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="password" ng-model="user.password" >
+          <input type="password" class="form-control" id="inputPassword3" placeholder="Enter your Password" name="password" ng-model="user.password" >
         </div>
       </div>
       <div class="form-group">
@@ -30,7 +30,7 @@
 
   
 
-    <div class="auth-sep"><span><span><a href="#/reg" style="color:white;">New to DaaS? Sign up!</a></span></span></div>
+    <div class="auth-sep"><span><span><a href="/reg" style="color:white;">New to DaaS? Sign up!</a></span></span></div>
 
     <!--
     <div class="al-share-auth">
@@ -44,37 +44,3 @@
   </div>
 </main>
 
-
-
-<script type="text/javascript">
-
-  var today = new Date();
-  var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
-
-  function setCookie(name, value)
-  {
-    document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
-  }
-
-
-  function storeValues(form)  
-  {
-    //setCookie("email", form.email.value);
-    //setCookie("password", form.password.value);
-  
-    console.log(getCookie("email"));
-    console.log(getCookie("password"));
-
-    return true;
-  }
-
-   function getCookie(name)
-  {
-    var re = new RegExp(name + "=([^;]+)");
-    var value = re.exec(document.cookie);
-    return (value != null) ? unescape(value[1]) : null;
-  }
-
-
-
-</script>

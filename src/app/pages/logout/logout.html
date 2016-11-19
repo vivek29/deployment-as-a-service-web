@@ -4,56 +4,7 @@
   <div class="auth-block">
     <h1>You have logged out successfully.{{title}}</h1>
   
+    <div class="auth-sep"><span><span><a href="/login" style="color:white;">Log Back In?</a></span></span></div>
 
-    
-
-  
-
-    <div class="auth-sep"><span><span><a href="#/login" style="color:white;">Log Back In?</a></span></span></div>
-
-    <!--
-    <div class="al-share-auth">
-      <ul class="al-share clearfix">
-        <li><i class="socicon socicon-facebook" title="Share on Facebook"></i></li>
-        <li><i class="socicon socicon-twitter" title="Share on Twitter"></i></li>
-        <li><i class="socicon socicon-google" title="Share on Google Plus"></i></li>
-      </ul>
-    </div>
-    -->
   </div>
 </main>
-
-
-
-<script type="text/javascript">
-
-  var today = new Date();
-  var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
-
-  function setCookie(name, value)
-  {
-    document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
-  }
-
-
-  function storeValues(form)  
-  {
-    //setCookie("email", form.email.value);
-    //setCookie("password", form.password.value);
-  
-    console.log(getCookie("email"));
-    console.log(getCookie("password"));
-
-    return true;
-  }
-
-   function getCookie(name)
-  {
-    var re = new RegExp(name + "=([^;]+)");
-    var value = re.exec(document.cookie);
-    return (value != null) ? unescape(value[1]) : null;
-  }
-
-
-
-</script>
