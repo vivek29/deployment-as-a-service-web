@@ -18,7 +18,7 @@
           },
           controller: function($scope,$location){
 
-           $scope.register = function(user)
+           $scope.register = function()
           {
             console.log("clicked register");
             // make http call here,

@@ -2,6 +2,7 @@
 
 var app = angular.module('BlurAdmin', [
   'ngAnimate',
+  'ngMessages',
   'ngCookies',
   'ui.bootstrap',
   'ui.sortable',

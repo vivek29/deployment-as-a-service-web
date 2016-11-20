@@ -19,17 +19,24 @@
           },
            controller: function($scope,$location){
 
-           $scope.login = function(user)
+           $scope.login = function()
           {
-            console.log("clicked login");
-            console.log(user);
-            var formEmail = user.email;
-            var formPassword = user.password;
+            var params = {
+                name: $scope.displayName,
+                email: $scope.email,
+                password: $scope.password
+            };
 
-            /**
-                Make http call here. if success next page
-                 $location.path("/dashboard");
-            */
+            DataService.postData(urlConstants.LOGIN, params)
+            .success(function(data) {
+                $scope.userDetails = data;
+                console.log(userDetails);
+
+             //    getUserProjects();
+            }).error(function(err){
+              console.log("Error logging the User");
+            });
+
           }  
 
           }

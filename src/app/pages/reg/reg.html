@@ -1,53 +1,92 @@
+<div style="padding-top: 100px;"></div>
 <main class="auth-main">
-  <div class="auth-block">
-    <h1>Sign up to DaaS</h1>
-      
-    <form class="form-horizontal" name="myform" onsubmit="return storeValues(this);">
-      <div class="form-group">
-        <label for="inputFirstName3" class="col-sm-3 control-label">First Name</label>
+<div class="auth-block">
+  <form method="post" ng-submit="signup()" name="signupForm" novalidate>
+    <h2 class="text-center" style="padding-bottom: 20px;">Sign up to DaaS</h2>
 
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inpuFirstName3" placeholder="Enter your First Name">
+    <div class="form-group has-feedback"
+      ng-class="{ 'has-error' : signupForm.firstName.$invalid && signupForm.firstName.$dirty }">
+      <input class="form-control input-lg" type="text" name="firstName"
+        ng-model="firstName" placeholder="Enter your First Name" required> <span
+        class="ion-person form-control-feedback"></span>
+      <div class="help-block text-danger"
+            ng-messages="signupForm.firstName.$error" role="alert"
+            ng-if="signupForm.firstName.$dirty">
+        <div ng-message="required">You must enter your first name.</div>
+      </div>
+    </div>
+
+    <div class="form-group has-feedback"
+      ng-class="{ 'has-error' : signupForm.lastName.$invalid && signupForm.lastName.$dirty }">
+      <input class="form-control input-lg" type="text" name="lastName"
+        ng-model="lastName" placeholder="Enter your Last Name" required> <span
+        class="ion-person form-control-feedback"></span>
+     <div class="help-block text-danger"
+            ng-messages="signupForm.lastName.$error" 
+            ng-if="signupForm.lastName.$dirty">
+        <div ng-message="required">You must enter your last name.</div>
+      </div>
+    </div>
+
+    <div class="form-group has-feedback"
+      ng-class="{ 'has-error' : signupForm.orgName.$invalid && signupForm.orgName.$dirty }">
+      <input unique-org-name class="form-control input-lg" type="text"
+        id="orgName" name="orgName" ng-model="orgName" placeholder="Enter your Organization Name"
+        required autofocus> <span
+        class="ion-briefcase form-control-feedback"></span>
+      <div class="help-block text-danger"
+            ng-messages="signupForm.orgName.$error" role="alert"
+            ng-if="signupForm.orgName.$dirty">
+        <div ng-message="required">The organization name is required.</div>
+        <div ng-message="unique">
+          <span class="ion-looping"></span> An account with this Organization Name already exists!
         </div>
       </div>
-       <div class="form-group">
-        <label for="inputLastName3" class="col-sm-3 control-label">Last Name</label>
+    </div>
 
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputLastName3" placeholder="Enter your Last Name">
+    <div class="form-group has-feedback"
+      ng-class="{ 'has-error' : signupForm.email.$invalid && signupForm.email.$dirty }">
+      <input unique-email class="form-control input-lg" type="email"
+        id="email" name="email" ng-model="email" placeholder="Enter your Email Id"
+        required autofocus> <span
+        class="ion-at form-control-feedback"></span>
+      <div class="help-block text-danger"
+            ng-messages="signupForm.email.$error" role="alert"
+            ng-if="signupForm.email.$dirty">
+        <div ng-message="required">Your email address is required.</div>
+        <div ng-message="email">Your email address is invalid.</div>
+        <div ng-message="unique">
+          <span class="ion-looping"></span> Email is already taken.
         </div>
       </div>
-      <div class="form-group">
-        <label for="inputEmail3" class="col-sm-3 control-label" >Email</label>
+    </div>
 
-        <div class="col-sm-9">
-          <input type="email" class="form-control" id="inputEmail3" placeholder="Enter your Email Id" name="email" ng-model="user.username">
-        </div>
+    <div class="form-group has-feedback"
+      ng-class="{ 'has-error' : signupForm.password.$invalid && signupForm.password.$dirty }">
+      <input class="form-control input-lg"
+        type="password" name="password" ng-model="password"
+        placeholder="Enter your Password" required> <span
+        class="ion-key form-control-feedback"></span>
+      <div class="help-block text-danger"
+            ng-messages="signupForm.password.$error" role="alert"
+            ng-if="signupForm.password.$dirty">
+        <div ng-message="required">Password is required.</div>
       </div>
-      <div class="form-group">
-        <label for="inputPassword3" class="col-sm-3 control-label" >Password</label>
+    </div>
 
-        <div class="col-sm-9">
-          <input type="password" class="form-control" id="inputPassword3" placeholder="Enter your Password" name="password" ng-model="user.password">
-        </div>
-      </div>
-        <div class="form-group">
-        <label for="inputPassword4" class="col-sm-3 control-label" >Organization</label>
+    <p class="text-center text-muted">
+      <small>By clicking on Sign up, you agree to <a href="#">terms
+          & conditions</a> and <a href="#">privacy policy</a></small>
+    </p>
 
-        <div class="col-sm-9">
-          <input type="organization" class="form-control" id="inputPassword4" placeholder="Enter your organization name" name="organization" ng-model="user.organization">
-        </div>
-      </div>
+    <button type="submit" ng-disabled="signupForm.$invalid"
+      class="btn btn-lg btn-block btn-primary">Sign up</button>
+    <br />
 
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button ng-click="register(user)" type="submit" class="btn btn-default btn-auth">Sign up</button>
-
-        </div>
-      </div>
-    </form>
-
-     <div class="auth-sep"><span><span><a href="/login" style="color:white;">Already have a DaaS account? Sign in!</a></span></span></div>
-  </div>
+    <p class="text-center text-muted">
+      Already have an account? <a href="/login">Log in now</a>
+    </p>
+  </form>
+</div>
 </main>
 

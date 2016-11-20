@@ -1,6 +1,4 @@
-/**
- * Animated load block
- */
+
 (function () {
   'use strict';
 
