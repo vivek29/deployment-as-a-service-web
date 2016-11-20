@@ -7,7 +7,7 @@
     <div class="form-group has-feedback"
       ng-class="{ 'has-error' : signupForm.firstName.$invalid && signupForm.firstName.$dirty }">
       <input class="form-control input-lg" type="text" name="firstName"
-        ng-model="firstName" placeholder="Enter your First Name" required> <span
+        ng-model="firstName" placeholder="Enter your First Name" required autofocus> <span
         class="ion-person form-control-feedback"></span>
       <div class="help-block text-danger"
             ng-messages="signupForm.firstName.$error" role="alert"
@@ -32,10 +32,10 @@
       ng-class="{ 'has-error' : signupForm.orgName.$invalid && signupForm.orgName.$dirty }">
       <input unique-org-name class="form-control input-lg" type="text"
         id="orgName" name="orgName" ng-model="orgName" placeholder="Enter your Organization Name"
-        required autofocus> <span
+        required> <span
         class="ion-briefcase form-control-feedback"></span>
       <div class="help-block text-danger"
-            ng-messages="signupForm.orgName.$error" role="alert"
+            ng-messages="signupForm.orgName.$error"
             ng-if="signupForm.orgName.$dirty">
         <div ng-message="required">The organization name is required.</div>
         <div ng-message="unique">
@@ -48,10 +48,10 @@
       ng-class="{ 'has-error' : signupForm.email.$invalid && signupForm.email.$dirty }">
       <input unique-email class="form-control input-lg" type="email"
         id="email" name="email" ng-model="email" placeholder="Enter your Email Id"
-        required autofocus> <span
+        required> <span
         class="ion-at form-control-feedback"></span>
       <div class="help-block text-danger"
-            ng-messages="signupForm.email.$error" role="alert"
+            ng-messages="signupForm.email.$error"
             ng-if="signupForm.email.$dirty">
         <div ng-message="required">Your email address is required.</div>
         <div ng-message="email">Your email address is invalid.</div>
@@ -68,7 +68,7 @@
         placeholder="Enter your Password" required> <span
         class="ion-key form-control-feedback"></span>
       <div class="help-block text-danger"
-            ng-messages="signupForm.password.$error" role="alert"
+            ng-messages="signupForm.password.$error"
             ng-if="signupForm.password.$dirty">
         <div ng-message="required">Password is required.</div>
       </div>
