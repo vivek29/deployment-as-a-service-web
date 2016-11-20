@@ -31,7 +31,9 @@ $panel-heading-font-size: 16px;
   &.viewport100 {
     height: calc(100vh - 218px);
   }
-
+  &.panelHeight{
+    height: 717px;
+  }
   &.with-scroll {
     .panel-body {
       height: calc(100% - #{$panel-title-height});
