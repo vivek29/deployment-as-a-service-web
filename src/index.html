@@ -11,7 +11,17 @@
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
-
+  <style>
+  .vertical-scroll div{
+    padding-bottom: 35px;
+    padding-top: 35px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .vertical-scroll div:hover{
+    box-shadow: 1px 1px 2px 1px rgba(0, 30, 0, 0.2);
+  }
+  </style>
   <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
   <!-- bower:css -->
   <!-- run `gulp inject` to automatically populate bower styles dependencies -->
@@ -28,7 +38,7 @@
 <div class="body-bg" ></div>
 <main ng-if="$pageFinishedLoading" ng-class="{'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
 
- <!-- <ba-sidebar></ba-sidebar> -->
+ <!--<ba-sidebar></ba-sidebar>-->
   <page-top></page-top>
 
   <div class="al-main">

@@ -11,6 +11,7 @@
     'BlurAdmin.pages.ui',
     'BlurAdmin.pages.form',
     'BlurAdmin.pages.home',
+    'BlurAdmin.pages.kubernetes',
     'ngCookies',
 
   ])
