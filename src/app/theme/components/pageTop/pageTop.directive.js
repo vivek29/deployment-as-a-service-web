@@ -3,7 +3,7 @@
   'use strict';
 
   var page = angular.module('BlurAdmin.theme.components');
-      
+
   page.directive('pageTop', pageTop);
 
   /** @ngInject */
@@ -16,6 +16,6 @@
     };
   }
 
-
+  $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
 
 })();

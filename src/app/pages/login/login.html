@@ -11,7 +11,7 @@
         required> <span
         class="ion-at form-control-feedback"></span>
       <div class="help-block text-danger"
-            ng-messages="loginForm.email.$error" 
+            ng-messages="loginForm.email.$error"
             ng-if="loginForm.email.$dirty">
         <div ng-message="required">Your email address is required.</div>
         <div ng-message="email">Your email address is invalid.</div>
@@ -25,7 +25,7 @@
         placeholder="Enter your Password" required> <span
         class="ion-key form-control-feedback"></span>
       <div class="help-block text-danger"
-            ng-messages="loginForm.password.$error" 
+            ng-messages="loginForm.password.$error"
             ng-if="loginForm.password.$dirty">
         <div ng-message="required">Password is required.</div>
       </div>
@@ -35,7 +35,7 @@
             {{invalidCreds}}
     </div>
 
-    <button type="submit" ng-disabled="loginForm.$invalid"
+    <button type="submit" ng-disabled="loginForm.$invalid || isDisabled"
       class="btn btn-lg btn-block btn-info">Sign in</button>
     <br />
 
@@ -45,4 +45,3 @@
   </form>
   </div>
 </main>
-
