@@ -29,6 +29,9 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
 
     $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
 
+    $rootScope.profileButtonVisible=true;
+    pc.getUserProjects(); 
+/*
     // if local storage is empty, redirect to login page
     if(!$scope.currentUser){
 
@@ -48,6 +51,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
       $rootScope.profileButtonVisible=true;
       pc.getUserProjects();      
     }
+    */
   };
 
 
@@ -56,6 +60,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
    */
   pc.getUserProjects = function(){
 
+    pc.userProjects = [];
     DataService.getData(urlConstants.DAAS_USER+$scope.currentUser.user_id+"/projects",[])
     .success(function(data) {
       
