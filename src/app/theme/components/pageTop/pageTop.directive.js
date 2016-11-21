@@ -11,10 +11,11 @@
     return {
       restrict: 'E',
       templateUrl: 'app/theme/components/pageTop/pageTop.html',
-      controller: function($scope,$location, $window){
-
-      $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
-      
+      controller: function($scope){
+      $scope.currentUser = {};
+      $scope.currentUser.email = "abc@sddy.com";
+      //$scope.currentUser = angular.fromJson($window.localStorage.currentUser);
+      //$scope.profileButtonVisible=true;
       console.log($scope.currentUser.email);
       }
     };
