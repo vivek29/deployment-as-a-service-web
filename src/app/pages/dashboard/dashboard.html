@@ -1,22 +1,202 @@
-<div ng-controller="ProjectController as pc"
-  ng-init="pc.getProjectDetails()">
-  <div class="container">
-    <div ng-if="pc.userProjects.length==0">
-      <span class='h1'>&nbsp;</span> <span class='h1'>&nbsp;</span>
-      <h3 class="text-center">
+<div ng-controller="ProjectController as pc" ng-init="pc.getProjectDetails()">
+    <div class="container">
+        <div ng-if="pc.userProjects.length!=0">
+            <span class='h1'>&nbsp;</span> <span class='h1'>&nbsp;</span>
+            <h3 class="text-center">
         <strong>You don't have any projects yet. Click the button
           below to add a project.</strong>
       </h3>
-      <span class='h1'>&nbsp;<br>&nbsp;<br>&nbsp;
+            <span class='h1'>&nbsp;<br>&nbsp;<br>&nbsp;
       </span>
-      <button class="btn btn-primary btn-lg center-block"
-        ng-click="pc.addProject()">
-        <span class='glyphicon glyphicon-plus'></span> Add a Project
-      </button>
+            <button class="btn btn-primary btn-lg center-block" ng-click="pc.addProject()">
+                <span class='glyphicon glyphicon-plus'></span> Add a Project
+            </button>
+        </div>
+
+
+        <div ng-if="pc.userProjects.length==0" class="row">
+            <div class="row" style="margin-top:15px; margin-bottom:15px;">
+                <div class="col-md-8">
+                    <h2>Dashboard               
+                  </h2>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary btn-md" ng-click="pc.addProject()">
+                        <span class='glyphicon glyphicon-plus'></span> Add a Project
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="panel panel-default bootstrap-panel">
+                    <div class="panel-body borderBottom">
+                        <p class="borderBottomLine">
+                            <span class="title">Project Name</span>
+                            <span class="dateDetails title">Date</span>
+                            <br/>
+                            <span class="descriptor">Cloud Project</span>
+                            <span class="dateDetails descriptor">11/10/2016</span>
+                        </p>
+                        <p class="borderBottomLine">
+                            <span class="title">Project Description</span>
+                            <br/>
+                            <span class="descriptor"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
+                        </p>
+                        <table style="width:100%;">
+                            <tr>
+                                <td>
+                                    <p>
+                                        <span class="title">Cloud Provider</span>
+                                        <br/>
+                                        <span class="descriptor">AWS</span>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p>
+                                        <span class="title">Master Size</span>
+                                        <br/>
+                                        <span class="descriptor">t1.large</span>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p>
+                                        <span class="title">Node Size</span>
+                                        <br/>
+                                        <span class="descriptor">t2.micro</span>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p>
+                                        <span class="title">No. of Nodes</span>
+                                        <br/>
+                                        <span class="descriptor">3</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=2>
+                                    <p>
+                                        <span class="title">App URL</span>
+                                        <br/>
+                                        <span class="descriptor">http://10.24.56.12:2345</span>
+                                    </p>
+                                </td>
+                                <td colspan=2>
+                                    <p style="margin-top:10px;">
+                                        <button class="btn btn-primary btn-sm" ng-click="pc.goToCluster()">
+                                            Go to Cluster
+                                        </button>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-default bootstrap-panel">
+                    <div class="panel-body">
+                        <p>Project Name</p>
+                        <p>
+                            <iframe src="https://admin:isqcZCIzrAsGlzKI@35.164.84.248/ui" height="300" width="100%"></iframe>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+
+                <div class="panel panel-default bootstrap-panel with-scroll">
+                    <div class="panel-heading" style="background-color: #209e91;color: #FFF;">Projects</div>
+                    <div class="panel-body bootstrap-panel with-scroll table-panel animated zoomIn" zoom-in="" ba-panel-blur="" style="background-size: 1274px 717px; background-position: 0px -190px; height: 500px;">
+                        <div class="ng-scope">
+                                <div class="panel panel-default bootstrap-panel cards">
+                                    <div class="panel-body borderBottom-small">
+                                        <p class="borderBottomLine">
+                                            <span class="title">Project Name</span>
+                                            <br/>
+                                            <span class="descriptor">Cloud Project</span>
+                                        </p>
+                                        <p>
+                                            <span class="title">Project Description</span>
+                                            <br/>
+                                            <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default bootstrap-panel">
+                                    <div class="panel-body borderBottom-small">
+                                        <p class="borderBottomLine">
+                                            <span class="title">Project Name</span>
+                                            <br/>
+                                            <span class="descriptor">Cloud Project</span>
+                                        </p>
+                                        <p>
+                                            <span class="title">Project Description</span>
+                                            <br/>
+                                            <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default bootstrap-panel">
+                                    <div class="panel-body borderBottom-small">
+                                        <p class="borderBottomLine">
+                                            <span class="title">Project Name</span>
+                                            <br/>
+                                            <span class="descriptor">Cloud Project</span>
+                                        </p>
+                                        <p>
+                                            <span class="title">Project Description</span>
+                                            <br/>
+                                            <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default bootstrap-panel">
+                                    <div class="panel-body">
+                                        <p class="borderBottomLine">
+                                            <span class="title">Project Name</span>
+                                            <br/>
+                                            <span class="descriptor">Cloud Project</span>
+                                        </p>
+                                        <p>
+                                            <span class="title">Project Description</span>
+                                            <br/>
+                                            <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default bootstrap-panel borderBottom-small">
+                                    <div class="panel-body">
+                                        <p class="borderBottomLine">
+                                            <span class="title">Project Name</span>
+                                            <br/>
+                                            <span class="descriptor">Cloud Project</span>
+                                        </p>
+                                        <p>
+                                            <span class="title">Project Description</span>
+                                            <br/>
+                                            <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+
     </div>
-
-
-
-   
-  </div>
-</div> 
+</div>

@@ -11,11 +11,14 @@
     return {
       restrict: 'E',
       templateUrl: 'app/theme/components/pageTop/pageTop.html',
-      controller: function($scope,$location){
+      controller: function($scope,$location, $window){
+
+      $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
+      
+      console.log($scope.currentUser.email);
       }
     };
   }
 
-  $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
 
 })();
