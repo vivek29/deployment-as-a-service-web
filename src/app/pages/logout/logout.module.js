@@ -17,20 +17,16 @@
             icon: 'ion-android-home',
             order: 0,
           },
-           controller: function($scope,$location){
-         //  $scope.title = 'My Contacts';
+           controller: function($scope, $rootScope,$location,$window,DataService){
 
            $scope.logout = function()
           {
-            console.log("clicked logout");
-
-            /**
-                Make http call here
-            */
+            delete $window.localStorage.currentUser;
+            $rootScope.profileButtonVisible=false;
+            $location.path('/logout');
             }
-             $scope.logout();
           }  
-          
+        //  $scope.logout();
         });
   }
 

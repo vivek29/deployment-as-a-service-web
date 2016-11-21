@@ -8,7 +8,7 @@
       ng-class="{ 'has-error' : loginForm.email.$invalid && loginForm.email.$dirty }">
       <input class="form-control input-lg" type="email"
         id="email" name="email" ng-model="email" placeholder="Enter your Email Id"
-        required autofocus> <span
+        required> <span
         class="ion-at form-control-feedback"></span>
       <div class="help-block text-danger"
             ng-messages="loginForm.email.$error" 
@@ -29,6 +29,10 @@
             ng-if="loginForm.password.$dirty">
         <div ng-message="required">Password is required.</div>
       </div>
+    </div>
+
+    <div class="help-block text-danger" ng-model="invalidCreds">
+            {{invalidCreds}}
     </div>
 
     <button type="submit" ng-disabled="loginForm.$invalid"

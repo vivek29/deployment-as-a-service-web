@@ -17,24 +17,28 @@
             icon: 'ion-android-home',
             order: 0,
           },
-           controller: function($scope,$location){
+          controller: function($scope,$location,$window,DataService){
 
            $scope.login = function()
           {
             var params = {
-                name: $scope.displayName,
                 email: $scope.email,
                 password: $scope.password
             };
-
+            console.log(params);
             DataService.postData(urlConstants.LOGIN, params)
             .success(function(data) {
-                $scope.userDetails = data;
-                console.log(userDetails);
-
-             //    getUserProjects();
+                console.log(data);
+                $window.localStorage.currentUser = angular.toJson(data);
+                $location.path('/dashboard');                
             }).error(function(err){
               console.log("Error logging the User");
+              $scope.invalidCreds = "Invalid Credentials! Please try again.";
+              
+              $scope.email = "";
+              $scope.password = "";
+              $scope.loginForm.$setPristine();
+              $scope.tabVm = {};
             });
 
           }  

@@ -1,18 +1,12 @@
-/**
- * @author v.lugovsky
- * created on 16.12.2015
- */
+
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.dashboard', ['ngRoute','ngCookies'])
+var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($httpProvider,$stateProvider) {
-
-
-
+  function routeConfig($stateProvider) {
     $stateProvider
         .state('dashboard', {
           url: '/dashboard',
@@ -22,80 +16,104 @@
             icon: 'ion-android-home',
             order: 0,
           },
-          resolve : {loggedIn : checkLogin},
-
+          controller: 'ProjectController'
         });
-  
+  }
+
+  dashboard.controller('ProjectController', function($scope, $rootScope, $location, DataService, $window,$uibModal) {
+
+  var pc = this;
+
+  /**ng init for fetching all projects of an user**/
+  pc.getProjectDetails = function() {
+
+    $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
+
+    // if local storage is empty, redirect to login page
+    if(!$scope.currentUser){
+
+      var modalInstance = $uibModal.open({
+        templateUrl : 'app/pages/loginNotification/loginNotification.html',
+        controller : 'LoginNotificationCtrl',
+        controllerAs : 'lnc',
+      });
+
+      modalInstance.result.then(function() {
+        //modal success
+      }, function() {
+         $location.path('/login');
+      }); 
+    }
+    else{
+      $rootScope.profileButtonVisible=true;
+      pc.getUserProjects();      
+    }
+  };
 
 
-     $httpProvider
-    .interceptors
-    .push(function($q, $location)
-    {
-        return {
-            response: function(response)
-            { 
-                console.log("response"+response);
-                return response;
-            },
-            responseError: function(response)
-            {
-                console.log("response err"+response);
-                if (response.status == 401)
-                    $location.path('/login');
-                return $q.reject(response);
-            }
-        };
+  /**
+   * Get users project details
+   */
+  pc.getUserProjects = function(){
+
+    DataService.getData(urlConstants.DAAS_USER+$scope.currentUser.user_id+"/projects",[])
+    .success(function(data) {
+      
+      pc.userProjects = data;
+      console.log(pc.userProjects);
+      $window.localStorage.Projects = angular.toJson(data);
+
+    }).error(function(err){
+      console.log(err);
+    });
+  };
+
+  pc.addProject = function (){
+    console.log("inside addproject");
+    var modalInstance1 = $uibModal.open({
+      templateUrl : 'app/pages/addProject/addProject.html',
+      controller : 'AddProjectCtrl',
+      controllerAs : 'apc',
+      resolve : {
+        user : function(){
+          return $scope.currentUser;
+        }
+      }
+    });
+
+    modalInstance1.result.then(function() {
+      pc.getUserProjects();
+    }, function() {
+      //modal exited 
     }); 
+  };
 
-  }
-
-
-var checkLogin =  function($q, $timeout, $http, $location, $rootScope,$cookieStore,$cookies)
-{
-    var deferred = $q.defer();
-  console.log("in dashboard");
-//console.log($cookies.get("email"));
-
-  console.log("clicked login");
- // console.log(user);
-  //var formUser = user.username;
-  //var formPassword = user.password;
-
-  console.log($cookies.getAll().email);
-  console.log($cookies.getAll().password);
-   var email =   $cookies.getAll().email;
-   var password = $cookies.getAll().password;
-
-  //  console.log($cookieStore.get("email"));
-   // console.log($cookieStore.get("password"));
-  // console.log("logged in "+$cookie.getAll().loggedIn);
-  
-    if (email === 'daas@gmail.com' && password === "daas"){
-         // $rootScope.currentUser = email;
-            deferred.resolve();
+  /**
+   * Remove Project Handler
+   */
+  pc.removeProject=function(project){
+    var modalInstance = $uibModal.open({
+      templateUrl : 'app/pages/deleteProject/deleteProject.html',
+      controller : 'DeleteProjectCtrl',
+      controllerAs : 'dpc',
+      size : 'sm',
+      resolve : {
+        project : function() {
+          return project;
         }
-        
-        // User is Not Authenticated
-        else
-        {
-            console.log('You need to log in.');
-            deferred.reject();
-            $location.path('/login');
-           
-        }
-    console.log (deferred.promise);
-    
-    
-    return deferred.promise;
-};
+      }
+    });
+    modalInstance.result.then(function() {
+      //update user projects on dashboard
+      pc.getUserProjects();
+      //modal closed success
+    }, function() {
+      //modal exited
+    });
+  };
 
-  /*
-  function getCookie(name)
-  {
-    var re = new RegExp(name + "=([^;]+)");
-    var value = re.exec(document.cookie);
-    return (value != null) ? unescape(value[1]) : null;
-  }
-*/
+});
+
 })();
+
+

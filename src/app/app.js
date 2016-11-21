@@ -19,12 +19,14 @@ var app = angular.module('BlurAdmin', [
   'BlurAdmin.pages',
 ]);
 
-app.config(function($locationProvider) {
+app.config(function($httpProvider, $locationProvider) {
 
   /**to remove hash in the URL**/
   $locationProvider.html5Mode({
     enabled : true,
     requireBase : false
   });
+
+  $httpProvider.defaults.withCredentials = true;
 });
 

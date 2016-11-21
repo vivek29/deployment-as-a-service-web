@@ -16,13 +16,35 @@
             icon: 'ion-android-home',
             order: 0,
           },
-          controller: function($scope,$location){
+          controller: function($scope,$location,$window,DataService,$uibModal){
 
-           $scope.register = function()
+           $scope.signup = function()
           {
-            console.log("clicked register");
-            // make http call here,
-            // $location.path("/login");
+            var params = {
+                firstName: $scope.firstName,
+                lastName: $scope.lastName,
+                organization: $scope.orgName,
+                email: $scope.email,
+                password: $scope.password
+            };
+            console.log(params);
+            DataService.postData(urlConstants.SIGNUP, params)
+            .success(function(data) {
+            }).error(function(err){     
+            });
+
+            var modalInstance = $uibModal.open({
+              templateUrl : 'app/pages/regNotification/signUpNotification.html',
+              controller : 'SignUpNotificationCtrl',
+              controllerAs : 'sunc',
+            });
+
+            modalInstance.result.then(function() {
+              //modal success
+            }, function() {
+               $location.path('/login');
+            }); 
+
           }
         }
         });
