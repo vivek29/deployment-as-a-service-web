@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.kubernetes', [])
+var kubernetes = angular.module('BlurAdmin.pages.kubernetes', [])
       .config(routeConfig);
 
   /** @ngInject */
@@ -15,6 +15,17 @@
           sidebarMeta: {
             order: 800,
           },
+          controller: 'KubernetesController'
         });
   }
+/*
+  kubernetes.controller('KubernetesController', function($scope, $rootScope, $location, DataService, $window,$uibModal) {
+
+  var kc = this;
+
+  $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
+
+});
+*/
+
 })();

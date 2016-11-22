@@ -30,7 +30,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
 
     $rootScope.profileButtonVisible=true;
-    pc.getUserProjects(); 
+    pc.getUserProjects();
 /*
     // if local storage is empty, redirect to login page
     if(!$scope.currentUser){
@@ -45,11 +45,11 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
         //modal success
       }, function() {
          $location.path('/login');
-      }); 
+      });
     }
     else{
       $rootScope.profileButtonVisible=true;
-      pc.getUserProjects();      
+      pc.getUserProjects();
     }
     */
   };
@@ -63,7 +63,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     pc.userProjects = [];
     DataService.getData(urlConstants.DAAS_USER+$scope.currentUser.user_id+"/projects",[])
     .success(function(data) {
-      
+
       pc.userProjects = data;
       console.log(pc.userProjects);
       $window.localStorage.Projects = angular.toJson(data);
@@ -89,8 +89,8 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     modalInstance1.result.then(function() {
       pc.getUserProjects();
     }, function() {
-      //modal exited 
-    }); 
+      //modal exited
+    });
   };
 
   /**
@@ -116,9 +116,9 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
       //modal exited
     });
   };
-
+  pc.goToCluster = function() {
+    $location.path("/kubernetes");
+  };
 });
 
 })();
-
-
