@@ -1,81 +1,36 @@
-<div class="row" style="margin-top:15px; margin-bottom:15px; margin-left:-80px;">
+<div class="row" ng-controller="KubernetesController as kc" ng-init="kc.getProjectDetails()"style="margin-top:15px; margin-bottom:15px; margin-left:-80px;">
   <div class="col-md-3">
     <div class="panel panel-default bootstrap-panel with-scroll">
         <div class="panel-heading" style="background-color: #209e91;color: #FFF;">Projects</div>
         <div class="panel-body borderBottom bootstrap-panel with-scroll table-panel animated zoomIn" zoom-in="" ba-panel-blur="" style="background-size: 1274px 717px; background-position: 0px -190px; height: 683px; border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;">
+            <div>
+              <form action="" class="search-form">
+                <div class="form-group has-feedback">
+                <label for="search" class="sr-only">Search</label>
+                <input type="text" class="form-control" ng-model="searchKeyword.projectName" placeholder="Search By Name">
+                  <span class="glyphicon glyphicon-search form-control-feedback"></span>
+              </div>
+            </form>
+            </div>
             <div class="ng-scope">
-                    <div class="panel panel-default bootstrap-panel cards">
+                    <div class="panel panel-default bootstrap-panel cards" ng-click="selectProject($event, project)" ng-repeat="project in kc.userProjects  | filter: searchKeyword ">
                         <div class="panel-body borderBottom-small">
                             <p class="borderBottomLine">
                                 <span class="title">Project Name</span>
+                                <span class="dateDetails title">Date Created</span>
                                 <br/>
-                                <span class="descriptor">Cloud Project</span>
+                                <span class="descriptor">{{project.projectName}}</span>
+                                 <span class="dateDetails descriptor">{{project.dateCreated}}</span>
                             </p>
                             <p>
                                 <span class="title">Project Description</span>
                                 <br/>
-                                <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
+                                <span class="descriptor"> {{project.description}}</span>
                             </p>
                         </div>
                     </div>
-                    <div class="panel panel-default bootstrap-panel">
-                        <div class="panel-body borderBottom-small">
-                            <p class="borderBottomLine">
-                                <span class="title">Project Name</span>
-                                <br/>
-                                <span class="descriptor">Cloud Project</span>
-                            </p>
-                            <p>
-                                <span class="title">Project Description</span>
-                                <br/>
-                                <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="panel panel-default bootstrap-panel">
-                        <div class="panel-body borderBottom-small">
-                            <p class="borderBottomLine">
-                                <span class="title">Project Name</span>
-                                <br/>
-                                <span class="descriptor">Cloud Project</span>
-                            </p>
-                            <p>
-                                <span class="title">Project Description</span>
-                                <br/>
-                                <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="panel panel-default bootstrap-panel">
-                        <div class="panel-body">
-                            <p class="borderBottomLine">
-                                <span class="title">Project Name</span>
-                                <br/>
-                                <span class="descriptor">Cloud Project</span>
-                            </p>
-                            <p>
-                                <span class="title">Project Description</span>
-                                <br/>
-                                <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="panel panel-default bootstrap-panel borderBottom-small">
-                        <div class="panel-body">
-                            <p class="borderBottomLine">
-                                <span class="title">Project Name</span>
-                                <br/>
-                                <span class="descriptor">Cloud Project</span>
-                            </p>
-                            <p>
-                                <span class="title">Project Description</span>
-                                <br/>
-                                <span class="descriptor"> Lorem Ipsum has been the industry's standard.</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            </div>
         </div>
     </div>
   </div>
