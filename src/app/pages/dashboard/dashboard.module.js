@@ -106,12 +106,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     var modalInstance1 = $uibModal.open({
       templateUrl : 'app/pages/addProject/addProject.html',
       controller : 'AddProjectCtrl',
-      controllerAs : 'apc',
-      resolve : {
-        user : function(){
-          return $scope.currentUser;
-        }
-      }
+      controllerAs : 'apc'
     });
 
     modalInstance1.result.then(function() {
@@ -144,6 +139,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
       //modal exited
     });
   };
+
   pc.goToCluster = function(project_url) {
     console.log(project_url);
     $location.path("/kubernetes");

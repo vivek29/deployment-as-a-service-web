@@ -1,0 +1,107 @@
+<div class="borderBottom-small">
+  <div class="modal-header">
+     <button type="button" class="close" ng-click="apc.cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h2 class="modal-title borderBottom-very-small" style="color:#1b867b;">Adding a new Project</h2><br>
+    <h3 class="ion-arrow-graph-up-right" style="color:#1b867b;"> Step 1: General Information</h3>
+  </div>    
+
+  <div class="modal-body" ng-init="apc.initAddProject()">
+    <form method="post" name="addProjectForm" ng-submit="apc.add()"
+      novalidate>
+      <div class="row">
+        <div class="col-xs-3" style="color:#1b867b;">Project Name</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback"
+          ng-class="{'has-error' : addProjectForm.title.$invalid && addProjectForm.title.$dirty }">
+          <input class="form-control" type="text" name="title"
+            ng-model="projectTitle" required>
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.title.$error" role="alert"
+          ng-if="addProjectForm.title.$dirty">
+          <div ng-message="required">Your must enter the project title
+            name.</div>
+        </div>
+
+        <div class="col-xs-12"separator>&nbsp;</div>
+
+        <div class="col-xs-3" style="color:#1b867b;">Description</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback"
+          ng-class="{'has-error' : addProjectForm.description.$invalid && addProjectForm.description.$dirty }">
+          <textarea class="form-control" name="description" ng-maxlength="500"
+            ng-model="projectDescription" required></textarea>
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.description.$error" role="alert"
+          ng-if="addProjectForm.description.$dirty">
+          <div ng-message="required">Description of the project is
+            required</div>
+          <div ng-message="maxlength">The project description exceeds
+            the max limit of 500 characters.</div>
+        </div>
+
+        <div class="col-xs-12"separator>&nbsp;</div>
+
+        <div class="col-xs-3" style="color:#1b867b;">Cloud Provider</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback">
+          <input class="form-control" type="text" placeholder="AWS" name="cloudProvider"
+            ng-model="cloudProvider" ng-disabled = "true" />
+        </div>
+
+        <div class="col-xs-12"separator>&nbsp;</div>
+
+        <div class="col-xs-3" style="color:#1b867b;">AWS Access Key</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback"
+          ng-class="{'has-error' : addProjectForm.awsAccessKey.$invalid && addProjectForm.awsAccessKey.$dirty }">
+          <input class="form-control" type="text" name="awsAccessKey"
+            ng-model="awsAccessKey" required>
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.awsAccessKey.$error" role="alert"
+          ng-if="addProjectForm.awsAccessKey.$dirty">
+          <div ng-message="required">Your must enter the AWS Access key
+          </div>
+        </div>
+
+         <div class="col-xs-12"separator>&nbsp;</div>
+
+        <div class="col-xs-3" style="color:#1b867b;">AWS Secret Key</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback"
+          ng-class="{'has-error' : addProjectForm.awsSecretKey.$invalid && addProjectForm.awsSecretKey.$dirty }">
+          <input class="form-control" type="text" name="awsSecretKey"
+            ng-model="awsSecretKey" required>
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.awsSecretKey.$error" role="alert"
+          ng-if="addProjectForm.awsSecretKey.$dirty">
+          <div ng-message="required">Your must enter the AWS Secret key
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary"
+          ng-disabled="addProjectForm.$invalid">Next</button>
+        <button class="btn btn-danger" ng-click="apc.cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+</div>
