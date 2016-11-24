@@ -97,7 +97,9 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     });
   };
 
-  $scope.selectProject = function($event, project) {
+  $scope.cardNumber = 0;
+  $scope.selectProject = function($event,index, project) {
+    $scope.cardNumber = index;
     pc.selectedProject = project;
   };
 

@@ -135,8 +135,10 @@
                         </div>
                         
                         <div class="ng-scope">
-                                <div class="panel panel-default bootstrap-panel cards" ng-click="selectProject($event, project)" ng-repeat="project in pc.userProjects  | filter: searchKeyword ">
-                                    <div class="panel-body borderBottom-small">
+                                <div class="panel panel-default bootstrap-panel cards"  ng-click="selectProject($event,$index, project)" ng-repeat="project in pc.userProjects  | filter: searchKeyword ">
+                                    <div class="panel-body borderBottom-small" ng-class="{ selectedCard: $index == cardNumber }">
+                                      <div ng-class="{ selector: $index == cardNumber }">
+                                      </div>
                                         <p class="borderBottomLine">
                                             <span class="title">Project Name</span>
                                             <span class="dateDetails title">Date Created</span>

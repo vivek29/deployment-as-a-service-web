@@ -86,7 +86,9 @@ var kubernetes = angular.module('BlurAdmin.pages.kubernetes', [])
   
   };
 
-   $scope.selectProject = function($event, project) {
+  $scope.cardNumber = 0;
+  $scope.selectProject = function($event,index, project) {
+    $scope.cardNumber = index;
     kc.selectedProject = project;
   };
 
