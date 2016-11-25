@@ -12,7 +12,6 @@
     'BlurAdmin.pages.addProject',
     'BlurAdmin.pages.deleteProject',
     'BlurAdmin.pages.dashboard',
-    'BlurAdmin.pages.ui',
     'BlurAdmin.pages.home',
     'BlurAdmin.pages.kubernetes',
     'ngCookies',
