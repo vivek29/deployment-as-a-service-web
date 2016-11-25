@@ -2,9 +2,7 @@
 
 angular.module('BlurAdmin.pages.regNotification', []).controller('SignUpNotificationCtrl', function($scope,$uibModalInstance) {
 
-	var sunc = this;
-
-	sunc.ok = function(){
+	$scope.ok = function(){
 		$uibModalInstance.dismiss();
 	};
 

@@ -1,16 +1,29 @@
 <div ng-controller="ProjectController as pc" ng-init="pc.getProjectDetails()">
     <div class="container">
-        <div ng-if="pc.userProjects.length==0">
-            <span class='h1'>&nbsp;</span> <span class='h1'>&nbsp;</span>
-            <h3 class="text-center">
-        <strong>You don't have any projects yet. Click the button
-          below to add a project.</strong>
-      </h3>
-            <span class='h1'>&nbsp;<br>&nbsp;<br>&nbsp;
-      </span>
-            <button class="btn btn-primary btn-lg center-block" ng-click="pc.addProject()">
-                <span class='glyphicon glyphicon-plus'></span> Add a Project
-            </button>
+        <div ng-if="pc.userProjects.length==0" class="row">
+            <div class="row borderBottomLine" style="margin-top:15px; margin-bottom:15px;">
+              <div class="col-md-8">
+                <h2>Dashboard
+                </h2>
+              </div>
+            </div>  
+            <div>
+              <span class='h1'>&nbsp;</span> <span class='h1'>&nbsp;</span>
+              <h3 class="text-center">
+                You don't have any projects yet. Click the button
+                  below to add a project.
+              </h3>
+              <span class='h1'>&nbsp;<br>&nbsp;
+              </span>
+              <button class="btn btn-primary btn-lg center-block" ng-click="pc.addProject()">
+                  <span class='glyphicon glyphicon-plus'></span> Add a Project
+              </button>
+            </div>
+
+            <!--
+                    Add a informative flow for creating kube project or something.
+            -->
+
         </div>
 
 
@@ -129,7 +142,7 @@
             <div class="col-md-4">
                 <div class="panel panel-default bootstrap-panel with-scroll">
                     <div class="panel-heading" style="background-color: #209e91;color: #FFF;">Projects</div>
-                    <div class="panel-body borderBottom bootstrap-panel with-scroll table-panel animated zoomIn" zoom-in="" ba-panel-blur="" style="background-size: 1274px 717px; background-position: 0px -190px; height: 627px; border-bottom-left-radius: 5px;
+                    <div id = "scrollToTop" class="panel-body borderBottom bootstrap-panel with-scroll table-panel animated zoomIn" zoom-in="" ba-panel-blur="" style="background-size: 1274px 717px; background-position: 0px -190px; height: 627px; border-bottom-left-radius: 5px;
                     border-bottom-right-radius: 5px;">
                         <div>
                           <form action="" class="search-form">

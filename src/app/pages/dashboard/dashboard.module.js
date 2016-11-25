@@ -24,17 +24,25 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
 
   var pc = this;
 
+  // REMOVE THIS AFTERWARDS - temporary store current user in local storage
+  var user = {'user_id' : 5, 'firstname' : 'John', 'lastname' : 'Teller',
+                'email' : 'jax@soa.com', 'password' : null, 'organization' : 'SOA',
+                'dateRegistered' : 1480043600129, 'managementEC2InstanceId' : 'TEMP_ID'
+                }
+              ;
+                
+  $window.localStorage.currentUser = angular.toJson(user);
+
   /**ng init for fetching all projects of an user**/
   pc.getProjectDetails = function() {
 
-    $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
-
+    pc.currentUser = angular.fromJson($window.localStorage.currentUser);
     $rootScope.profileButtonVisible=true;
     pc.getUserProjects();
 
-/*
+
     // if local storage is empty, redirect to login page
-    if(!$scope.currentUser){
+    if(!pc.currentUser){
 
       var modalInstance = $uibModal.open({
         templateUrl : 'app/pages/loginNotification/loginNotification.html',
@@ -52,7 +60,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
       $rootScope.profileButtonVisible=true;
       pc.getUserProjects();
     }
-    */
+    
   };
 
 
@@ -61,6 +69,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
    */
   pc.getUserProjects = function(){
 
+    // DUMMY DATA
     pc.userProjects = [{'project_id':'jdshakjdhsakd','projectName':'Project 1',
                   'description': 'This is a dummy project.','cloudProvider':'AWS',
                   'dateCreated': '18 Nov 2016', 'project_url':'http://12.34.56.78:9876',
@@ -82,16 +91,17 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
                   'app_url': 'http://98.43.51.69:8000', 'masterSize':'t1.large',
                   'nodeSize':'t2.micro', 'nodeNumbers': '1', 'volumeSize': '200 GB'}];
 
-    // default
+    // default, first project in the list.
     pc.selectedProject = pc.userProjects[0];              
 
-    DataService.getData(urlConstants.DAAS_USER+$scope.currentUser.user_id+"/projects",[])
+    // remove this afterwards
+    $rootScope.userAllProjects = pc.userProjects;
+
+    DataService.getData(urlConstants.DAAS_USER+pc.currentUser.user_id+"/projects",[])
     .success(function(data) {
-
-      pc.userProjects = data;
       console.log(pc.userProjects);
-      $window.localStorage.Projects = angular.toJson(data);
-
+      pc.userProjects = data;
+      $rootScope.userAllProjects = pc.userProjects;
     }).error(function(err){
       console.log(err);
     });
@@ -99,9 +109,24 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
 
   $scope.cardNumber = 0;
   $scope.selectProject = function($event,index, project) {
-    $scope.cardNumber = index;
+    
+    pc.userProjects = pc.userProjects.move(index, 0);
     pc.selectedProject = project;
+
+    $window.scrollTo(0, 0);
+    angular.element("#scrollToTop")[0].scrollTop=0;
   };
+
+  Array.prototype.move = function (old_index, new_index) {
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while ((k--) + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+    return this; 
+};
 
   pc.addProject = function (){
     console.log("inside addproject");

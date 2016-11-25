@@ -28,5 +28,6 @@ app.config(function($httpProvider, $locationProvider) {
   });
 
   $httpProvider.defaults.withCredentials = true;
+
 });
 
