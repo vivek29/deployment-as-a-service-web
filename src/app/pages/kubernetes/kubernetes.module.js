@@ -55,8 +55,23 @@ var kubernetes = angular.module('BlurAdmin.pages.kubernetes', [])
 
   $scope.cardNumber = 0;
   $scope.selectProject = function($event,index, project) {
-    $scope.cardNumber = index;
+    
+    kc.userProjects = kc.userProjects.move(index, 0);
     kc.selectedProject = project;
+
+    $window.scrollTo(0, 0);
+    angular.element("#scrollToTop")[0].scrollTop=0;    
+  };
+
+  Array.prototype.move = function (old_index, new_index) {
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while ((k--) + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+    return this; 
   };
 
 

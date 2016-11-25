@@ -126,7 +126,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     }
     this.splice(new_index, 0, this.splice(old_index, 1)[0]);
     return this; 
-};
+  };
 
   pc.addProject = function (){
     console.log("inside addproject");
