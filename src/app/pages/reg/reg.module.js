@@ -37,6 +37,7 @@
               templateUrl : 'app/pages/regNotification/signUpNotification.html',
               controller : 'SignUpNotificationCtrl',
               controllerAs : 'sunc',
+              size : 'md',
             });
 
             modalInstance.result.then(function() {

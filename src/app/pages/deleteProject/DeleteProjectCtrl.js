@@ -2,6 +2,7 @@
 
 angular.module('BlurAdmin.pages.deleteProject', []).controller('DeleteProjectCtrl', function($scope,$uibModalInstance,project,DataService) {
 	var dpc = this;
+	console.log(project.project_id);
 
 	dpc.okay = function(){
 		var urlParams = "/"+project.project_id;
