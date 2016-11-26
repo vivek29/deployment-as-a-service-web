@@ -3,23 +3,26 @@
 angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrl', function($scope,$uibModalInstance,DataService, $window) {
 	var apc = this;
 
-	 $scope.step = 1;
-	 console.log("step no"+step);
-        $scope.setStep = function(step){
-           $scope.step = step;
-           console.log(step);
-        };
+	//$scope.step = 1;
+	//console.log("step no"+step);
+	//apc.setStep = function(step){
+//		$scope.step = step;
+		//console.log(step);
+	//};
 
 
 	apc.initAddProject = function(){
 		$scope.projectTitle = "";
-		 $scope.step = 1;
-		 console.log("step no"+step);
 		$scope.projectDescription = "";
 		$scope.addStyleTitle ="width:70%";
 		$scope.addStyleDescription ="width:70%";
 		
 		$scope.currentUser = $window.localStorage.currentUser;
+
+		$scope.masterSize = "";
+		$scope.nodeSize = "";
+		$scope.nodeNumbers = "";
+		$scope.volumeSize - "";
 
 
 
@@ -38,7 +41,15 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrl', fu
 			$scope.descriptionPlaceholder = "Description can't be empty!";
 			$scope.addStyleDescription = "width:70%;border: 1px solid red";
 		}
-		if ($scope.projectTitle.length!=0 && $scope.projectTitle.length!=0){
+
+		if ($scope.masterSize.length==0){
+			$scope.masterSizePlaceholder ="Master Size can't be empty!";
+			$scope.addStyleMasterSize = "width:70%;border: 1px solid red";
+		}
+
+
+		//add condition for masterSize 
+		if ($scope.projectTitle.length!=0 && $scope.projectDescription.length!=0){
 			console.log(1);
 			var queryParams = "?title="+$scope.projectTitle+"&description="+
 			$scope.projectDescription+"&user_id="+$window.localStorage.currentUserId;
@@ -52,5 +63,10 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrl', fu
 				$scope.formError = "Error while adding project.";
 			});
 		}
+
+
+
+
+
 	};
 });

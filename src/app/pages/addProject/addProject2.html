@@ -13,16 +13,15 @@
         <div class="col-xs-3" style="color:#1b867b;">Kube Master Instance Type</div>
         <div class="col-xs-1">:</div>
         <div class="col-xs-8 form-group has-feedback"
-          ng-class="{'has-error' : addProjectForm.title.$invalid && addProjectForm.title.$dirty }">
+          ng-class="{'has-error' : addProjectForm.masterSize.$invalid && addProjectForm.masterSize.$dirty }">
  
-
-          <input class="form-control" list="master" name="master">
-            <datalist id="master">
-            <option value="Internet Explorer">
-            <option value="Firefox">
-            <option value="Chrome">
-            <option value="Opera">
-            <option value="Safari">
+          <input class="form-control" list="masterSize" name="masterSize" ng-model="masterSize" required>
+            <datalist id="masterSize">
+            <option value="t2.nano">
+            <option value="t2.micro">
+            <option value="t2.small">
+            <option value="t2.medium">
+            <option value="t2.large">
           </datalist>
 
         </div>
@@ -30,8 +29,8 @@
         <div class="col-xs-3"></div>
         <div class="col-xs-1"></div>
         <div class="col-xs-8 help-block text-danger"
-          ng-messages="addProjectForm.title.$error" role="alert"
-          ng-if="addProjectForm.title.$dirty">
+          ng-messages="addProjectForm.masterSize.$error" role="alert"
+          ng-if="addProjectForm.masterSize.$dirty">
           <div ng-message="required">You must select Master Instance Type.
             </div>
         </div>
@@ -41,15 +40,15 @@
         <div class="col-xs-3" style="color:#1b867b;">Kube Node Instance Type</div>
         <div class="col-xs-1">:</div>
         <div class="col-xs-8 form-group has-feedback"
-          ng-class="{'has-error' : addProjectForm.description.$invalid && addProjectForm.description.$dirty }">
+          ng-class="{'has-error' : addProjectForm.nodeSize.$invalid && addProjectForm.nodeSize.$dirty }">
         
-          <input class="form-control" list="node" name="node">
-            <datalist id="node">
-            <option value="Internet Explorer">
-            <option value="Firefox">
-            <option value="Chrome">
-            <option value="Opera">
-            <option value="Safari">
+          <input class="form-control" list="nodeSize" name="nodeSize" ng-model="nodeSize" required>
+            <datalist id="nodeSize">
+            <option value="t2.nano">
+            <option value="t2.micro">
+            <option value="t2.small">
+            <option value="t2.medium">
+            <option value="t2.large">
           </datalist>
 
 
@@ -58,8 +57,8 @@
         <div class="col-xs-3"></div>
         <div class="col-xs-1"></div>
         <div class="col-xs-8 help-block text-danger"
-          ng-messages="addProjectForm.description.$error" role="alert"
-          ng-if="addProjectForm.description.$dirty">
+          ng-messages="addProjectForm.nodeSize.$error" role="alert"
+          ng-if="addProjectForm.nodeSize.$dirty">
           <div ng-message="required">
             You must select Node Instance Type.            
           </div>
@@ -70,10 +69,11 @@
 
         <div class="col-xs-3" style="color:#1b867b;">Number Of Nodes</div>
         <div class="col-xs-1">:</div>
-        <div class="col-xs-8 form-group has-feedback">
+        <div class="col-xs-8 form-group has-feedback"
+            ng-class="{'has-error' : addProjectForm.nodeNumbers.$invalid && addProjectForm.nodeNumbers.$dirty }">
          
-          <input class="form-control" list="numberNodes" name="numberNodes" >
-            <datalist id="numberNodes">
+          <input class="form-control" list="nodeNumbers" name="nodeNumbers" ng-model="nodeNumbers" required>
+            <datalist id="nodeNumbers">
             <option value="1">
             <option value="2">
             <option value="3">
@@ -85,14 +85,25 @@
 
         </div>
 
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.nodeNumbers.$error" role="alert"
+          ng-if="addProjectForm.nodeNumbers.$dirty">
+          <div ng-message="required">
+            You select the Number of Nodes.            
+          </div>
+         
+        </div>
+
         <div class="col-xs-12"separator>&nbsp;</div>
 
         <div class="col-xs-3" style="color:#1b867b;" >Disk Size </div>
         <div class="col-xs-1">:</div>
         <div class="col-xs-4 form-group has-feedback"
-          ng-class="{'has-error' : addProjectForm.awsAccessKey.$invalid && addProjectForm.awsAccessKey.$dirty }">
+          ng-class="{'has-error' : addProjectForm.volumeSize.$invalid && addProjectForm.volumeSize.$dirty }">
           <div class="col-xs-9">
-          <input class="form-control" type="number" name="diskSize" min=1 required> </div>
+          <input class="form-control" type="number" name="volumeSize" min=1 ng-model="volumeSize" required> </div>
            <p class="text-left">GB<p>
            <div class="col-xs-3"></div>
         </div>
@@ -102,8 +113,8 @@
         <div class="col-xs-3"></div>
         <div class="col-xs-1"></div>
         <div class="col-xs-8 help-block text-danger"
-          ng-messages="addProjectForm.awsAccessKey.$error" role="alert"
-          ng-if="addProjectForm.awsAccessKey.$dirty">
+          ng-messages="addProjectForm.volumeSize.$error" role="alert"
+          ng-if="addProjectForm.volumeSize.$dirty">
             <div ng-message="required">Select the disk size
             </div>
         </div>
