@@ -14,6 +14,7 @@
     'BlurAdmin.pages.dashboard',
     'BlurAdmin.pages.home',
     'BlurAdmin.pages.kubernetes',
+    'BlurAdmin.pages.projectTree',
     'ngCookies',
 
   ])
