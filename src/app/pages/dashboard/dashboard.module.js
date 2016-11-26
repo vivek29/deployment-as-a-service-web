@@ -171,6 +171,32 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     console.log(project_url);
     $location.path("/kubernetes");
   };
+
+  pc.openTree = function(project) {
+
+    var modalInstance = $uibModal.open({
+      templateUrl : 'app/pages/projectTree/projectTree.html',
+      controller : 'ProjectTreeCtrl',
+      controllerAs : 'ptc',
+      size : 'lg',
+      resolve : {
+        project : function() {
+          return project;
+        }
+      }
+    });
+    modalInstance.result.then(function() {
+      //update user projects on dashboard
+      pc.getUserProjects();
+      //modal closed success
+    }, function() {
+      //modal exited
+    });
+
+  };
+
+
 });
+
 
 })();
