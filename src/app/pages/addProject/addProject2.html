@@ -1,0 +1,137 @@
+<div class="borderBottom-small">
+  <div class="modal-header">
+     <button type="button" class="close" ng-click="apc.cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h2 class="modal-title borderBottom-very-small" style="color:#1b867b;">Adding a new Project</h2><br>
+    <h3 class="ion-arrow-graph-up-right" style="color:#1b867b;"> Step 2: Kubernetes Infrastructure Information</h3>
+    <h5 style="color:#1b867b;"> Please select following fields for creating a Kubernetes Cluster on AWS: </h5>
+  </div>    
+
+  <div class="modal-body" ng-init="apc.initAddProject()">
+    <form method="post" name="addProjectForm" ng-submit="apc.add()"
+      novalidate>
+      <div class="row">
+        <div class="col-xs-3" style="color:#1b867b;">Kube Master Instance Type</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback"
+          ng-class="{'has-error' : addProjectForm.masterSize.$invalid && addProjectForm.masterSize.$dirty }">
+ 
+          <input class="form-control" list="masterSize" name="masterSize" ng-model="masterSize" required>
+            <datalist id="masterSize">
+            <option value="t2.nano">
+            <option value="t2.micro">
+            <option value="t2.small">
+            <option value="t2.medium">
+            <option value="t2.large">
+          </datalist>
+
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.masterSize.$error" role="alert"
+          ng-if="addProjectForm.masterSize.$dirty">
+          <div ng-message="required">You must select Master Instance Type.
+            </div>
+        </div>
+
+        <div class="col-xs-12"separator>&nbsp;</div>
+
+        <div class="col-xs-3" style="color:#1b867b;">Kube Node Instance Type</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback"
+          ng-class="{'has-error' : addProjectForm.nodeSize.$invalid && addProjectForm.nodeSize.$dirty }">
+        
+          <input class="form-control" list="nodeSize" name="nodeSize" ng-model="nodeSize" required>
+            <datalist id="nodeSize">
+            <option value="t2.nano">
+            <option value="t2.micro">
+            <option value="t2.small">
+            <option value="t2.medium">
+            <option value="t2.large">
+          </datalist>
+
+
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.nodeSize.$error" role="alert"
+          ng-if="addProjectForm.nodeSize.$dirty">
+          <div ng-message="required">
+            You must select Node Instance Type.            
+          </div>
+         
+        </div>
+
+        <div class="col-xs-12"separator>&nbsp;</div>
+
+        <div class="col-xs-3" style="color:#1b867b;">Number Of Nodes</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback"
+            ng-class="{'has-error' : addProjectForm.nodeNumbers.$invalid && addProjectForm.nodeNumbers.$dirty }">
+         
+          <input class="form-control" list="nodeNumbers" name="nodeNumbers" ng-model="nodeNumbers" required>
+            <datalist id="nodeNumbers">
+            <option value="1">
+            <option value="2">
+            <option value="3">
+            <option value="4">
+            <option value="5">
+            <option value="6">
+            <option value="7">
+          </datalist>
+
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.nodeNumbers.$error" role="alert"
+          ng-if="addProjectForm.nodeNumbers.$dirty">
+          <div ng-message="required">
+            You select the Number of Nodes.            
+          </div>
+         
+        </div>
+
+        <div class="col-xs-12"separator>&nbsp;</div>
+
+        <div class="col-xs-3" style="color:#1b867b;" >Disk Size </div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-4 form-group has-feedback"
+          ng-class="{'has-error' : addProjectForm.volumeSize.$invalid && addProjectForm.volumeSize.$dirty }">
+          <div class="col-xs-9">
+          <input class="form-control" type="number" name="volumeSize" min=1 ng-model="volumeSize" required> </div>
+           <p class="text-left">GB<p>
+           <div class="col-xs-3"></div>
+        </div>
+         <div class="col-xs-4"></div>
+
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.volumeSize.$error" role="alert"
+          ng-if="addProjectForm.volumeSize.$dirty">
+            <div ng-message="required">Select the disk size
+            </div>
+        </div>
+
+         <div class="col-xs-12"separator>&nbsp;</div>
+
+       
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary"
+          ng-disabled="addProjectForm.$invalid">Create Cluster</button>
+        <button class="btn btn-danger" ng-click="apc.cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
