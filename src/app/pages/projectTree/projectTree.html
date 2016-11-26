@@ -1,12 +1,17 @@
-<div class="modal-header">
-	<h3 class="modal-title borderBottom-very-small" style="color:#1b867b;">Project Cluster Information</h3>
-</div>
-<div class="modal-body">
-	<div id="tree-container"></div>
+<div ng-init="ptc.init()">
+	<div class="modal-header">
+		<h3 class="modal-title borderBottom-very-small" style="color:#1b867b;">{{project.projectName}} - Cluster Information
+			<button type="button" class="close" ng-click="ptc.okay()" data-dismiss="modal" aria-hidden="true">&times;</button>
+		</h3>
 
+	</div>
+	<div class="modal-body">
+		<h4> {{project.description}} </h4>
 
-</div>
-<div class="modal-footer" align="center">
+		<div id="tree-container"></div>
+	</div>
+	<div class="modal-footer" align="center">
 
-	<button class="btn btn-primary" ng-click="ptc.okay()">Ok</button>
-</div>
+		<button class="btn btn-primary" ng-click="ptc.okay()">Close</button>
+	</div>
+<div>

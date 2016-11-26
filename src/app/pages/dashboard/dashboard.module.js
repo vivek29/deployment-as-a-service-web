@@ -195,7 +195,6 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
 
   };
 
-
 });
 
 
