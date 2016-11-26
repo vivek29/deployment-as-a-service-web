@@ -3,33 +3,19 @@
 angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrl', function($scope,$uibModalInstance,DataService, $window) {
 	var apc = this;
 
-	 $scope.step = 1;
-	 console.log("step no"+step);
-        $scope.setStep = function(step){
-           $scope.step = step;
-           console.log(step);
-        };
-
-
 	apc.initAddProject = function(){
 		$scope.projectTitle = "";
-		 $scope.step = 1;
-		 console.log("step no"+step);
 		$scope.projectDescription = "";
 		$scope.addStyleTitle ="width:70%";
 		$scope.addStyleDescription ="width:70%";
 		
 		$scope.currentUser = $window.localStorage.currentUser;
-
-
-
 	}
 	apc.cancel = function(){
 		$uibModalInstance.dismiss();
 	};
 
 	apc.add = function(){
-		console.log("in add function");
 		if ($scope.projectTitle.length==0){
 			$scope.titlePlaceholder ="Title can't be empty!";
 			$scope.addStyleTitle = "width:70%;border: 1px solid red";
@@ -45,10 +31,9 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrl', fu
 
 			DataService.postData(urlConstants.PROJECTS+queryParams,{})
 			.success(function(data) {
-				console.log("data succ"+data);
+				console.log("data succ"+data)
 				$uibModalInstance.close('project added');
 			}).error(function(err){
-				console.log("data succ"+data);
 				$scope.formError = "Error while adding project.";
 			});
 		}

@@ -1,0 +1,170 @@
+<div class="borderBottom-small">
+  <div class="modal-header">
+   <button type="button" class="close" ng-click="apc.cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
+   <h2 class="modal-title borderBottom-very-small" style="color:#1b867b;">Adding a new Project</h2><br>
+   <h3 class="ion-arrow-graph-up-right" style="color:#1b867b;"> Step 5: Deploying App</h3>
+
+ </div>    
+
+
+
+ <div class="modal-body" ng-init="apc.initAddProject()">
+
+   <div class="panel-body">
+    <div class=" bootstrap-panel animated zoomIn">
+
+      <p class="borderBottomLine">
+        <span class="title">Project Name</span>
+        <span class="dateDetails title">Date Created</span>
+        <br/>
+        <span class="descriptor">{{pc.selectedProject.projectName}}</span>
+        <span class="dateDetails descriptor">{{pc.selectedProject.dateCreated}}</span>
+      </p>
+      
+      <p class="borderBottomLine">
+        <span class="title">Kube Project</span>
+        <br/>
+        <span class="descriptor"> {{pc.selectedProject.description}}</span>
+      </p>
+
+      <p class="borderBottomLine">
+        <span class="title">Project Description</span>
+        <br/>
+        <span class="descriptor"> {{pc.selectedProject.description}}</span>
+      </p>
+
+
+      <table style="width:100%;">
+        <tr>
+          <td>
+            <p>
+              <span class="title">Cloud Provider</span>
+              <br/>
+              <span class="descriptor">{{pc.selectedProject.cloudProvider}}</span>
+            </p>
+          </td>
+          <td>
+            <p>
+              <span class="title">Master Size</span>
+              <br/>
+              <span class="descriptor">{{pc.selectedProject.masterSize}}</span>
+            </p>
+          </td>
+          <td>
+            <p>
+              <span class="title">Node Size</span>
+              <br/>
+              <span class="descriptor">{{pc.selectedProject.nodeSize}}</span>
+            </p>
+          </td>
+          <td>
+            <p>
+              <span class="title">No. of Nodes</span>
+              <br/>
+              <span class="descriptor">{{pc.selectedProject.nodeNumbers}}</span>
+            </p>
+          </td>
+          <td>
+            <p>
+              <span class="title">Volume Size</span>
+              <br/>
+              <span class="descriptor">{{pc.selectedProject.volumeSize}}</span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <p>
+              <span class="title">App URL</span>
+              <br/>
+              <span class="descriptor">{{pc.selectedProject.app_url}}</span>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <p class="borderBottomLine"></p>
+
+    <div class="row">
+      <div class="col-xs-3" style="color:#1b867b;">Existing Cluster Master URL</div>
+      <div class="col-xs-1">:</div>
+      <div class="col-xs-8 form-group has-feedback"
+      ng-class="{'has-error' : addProjectForm.title.$invalid && addProjectForm.title.$dirty }">
+        <!--
+          <input class="form-control" type="text" name="title" 
+          ng-model="projectTitle" style="width:80%;float: right;" required> -->
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">https://</span>
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+          </div>  
+
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+        ng-messages="addProjectForm.title.$error" role="alert"
+        ng-if="addProjectForm.title.$dirty">
+        <div ng-message="required">Your must enter the master URL</div>
+      </div>
+
+      <div class="col-xs-12"separator>&nbsp;</div>
+
+      <div class="col-xs-3" style="color:#1b867b;">Existing Cluster User Name</div>
+      <div class="col-xs-1">:</div>
+      <div class="col-xs-8 form-group has-feedback"
+      ng-class="{'has-error' : addProjectForm.title.$invalid && addProjectForm.title.$dirty }">
+        <!--
+          <input class="form-control" type="text" name="title" 
+          ng-model="projectTitle" style="width:80%;float: right;" required> -->
+          <input class="form-control" type="text" name="userName" placeholder="admin"
+          ng-model="" disabled="true" >
+
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+        ng-messages="addProjectForm.title.$error" role="alert"
+        ng-if="addProjectForm.title.$dirty">
+        <div ng-message="required">Your must enter the master URL</div>
+      </div>
+
+      <div class="col-xs-12"separator>&nbsp;</div>
+
+      <div class="col-xs-3" style="color:#1b867b;">Existing Cluster User Password</div>
+      <div class="col-xs-1">:</div>
+      <div class="col-xs-8 form-group has-feedback"
+      ng-class="{'has-error' : addProjectForm.title.$invalid && addProjectForm.title.$dirty }">
+        <!--
+          <input class="form-control" type="text" name="title" 
+          ng-model="projectTitle" style="width:80%;float: right;" required> -->
+          <input class="form-control" type="text" name="userPassword" 
+          ng-model="" required >
+
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+        ng-messages="addProjectForm.title.$error" role="alert"
+        ng-if="addProjectForm.title.$dirty">
+        <div ng-message="required">Your must enter the master URL</div>
+      </div>
+
+
+
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary"
+    ng-disabled="addProjectForm.$invalid">Next</button>
+    <button class="btn btn-danger" ng-click="apc.cancel()">Cancel</button>
+  </div>
+
+</div>
+
+</div>
+
