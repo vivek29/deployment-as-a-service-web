@@ -39,6 +39,15 @@
     };
 
     vm.nextTab = function () {
+
+      if(vm.tabNum == 0){
+        console.log("form 1 submit");
+      }
+
+      if(vm.tabNum == 1){
+        console.log("form 2 submit");
+      }
+
       vm.selectTab(vm.tabNum + 1)
     };
 

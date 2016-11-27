@@ -1,0 +1,36 @@
+<div class="borderBottom-small">
+  <div class="modal-header">
+   <button type="button" class="close" ng-click="apcsi.cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
+   <h2 class="modal-title borderBottom-very-small" style="color:#1b867b;">Deploying the Application</h2><br>
+   <h3 class="ion-arrow-graph-up-right" style="color:#1b867b;"> Step 2: Confirm the Cluster Configurations </h3>
+ </div>    
+
+ <div class="modal-body" ng-init="apcsi.init()">
+
+  <div class="loadingContainer" ng-hide="apcsi.loadingBlock">
+    <div class="ex"></div>
+    <div class="ex"></div>
+    <div class="ex"></div>
+    <div class="ex"></div>      
+  </div>
+
+  <h4 style = "text-align:center; margin-bottom:25px;">Hang tight! Getting the cluster information..</h4>
+
+  <div ng-hide="gotClusterInfo">
+
+    <div>
+
+    </div>
+
+  </div>
+  
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-click="apcsi.deploy()"
+    ng-disabled="apcsi.disableDeploy">Deploy App</button>
+    <button class="btn btn-danger" ng-click="apcsi.cancel()">Cancel</button>
+  </div>
+
+</div>
+
+</div>
+

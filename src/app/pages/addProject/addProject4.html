@@ -1,38 +1,30 @@
 <div class="borderBottom-small">
   <div class="modal-header">
-   <button type="button" class="close" ng-click="apc.cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
+   <button type="button" class="close" ng-click="apcf.cancel()" data-dismiss="modal" aria-hidden="true">&times;</button>
    <h2 class="modal-title borderBottom-very-small" style="color:#1b867b;">Adding a new Project</h2><br>
-   <h3 class="ion-arrow-graph-up-right" style="color:#1b867b;"> Step 4: After Cluster Creation</h3>
+   <h3 class="ion-arrow-graph-up-right" style="color:#1b867b;"> Step 3: Choose how you want to deploy your application.</h3>
   
  </div>    
 
 
 
- <div class="modal-body" ng-init="apc.initAddProject()">
-
- <div class="panel-body">
+ <div class="modal-body">
+ <div class="panel-body" style="margin-bottom: 50px;">
   <div class=" bootstrap-panel animated zoomIn">
    
       <p class="borderBottomLine">
         <span class="title">Project Name</span>
         <span class="dateDetails title">Date Created</span>
         <br/>
-        <span class="descriptor">{{pc.selectedProject.projectName}}</span>
-        <span class="dateDetails descriptor">{{pc.selectedProject.dateCreated}}</span>
-      </p>
-      
-      <p class="borderBottomLine">
-        <span class="title">Kube Project</span>
-        <br/>
-        <span class="descriptor"> {{pc.selectedProject.description}}</span>
+        <span class="descriptor">{{apcf.project.projectName}}</span>
+        <span class="dateDetails descriptor">{{apcf.project.dateCreated}}</span>
       </p>
 
       <p class="borderBottomLine">
         <span class="title">Project Description</span>
         <br/>
-        <span class="descriptor"> {{pc.selectedProject.description}}</span>
+        <span class="descriptor"> {{apcf.project.description}}</span>
       </p>
-
 
       <table style="width:100%;">
         <tr>
@@ -40,44 +32,35 @@
             <p>
               <span class="title">Cloud Provider</span>
               <br/>
-              <span class="descriptor">{{pc.selectedProject.cloudProvider}}</span>
+              <span class="descriptor">{{apcf.project.cloudProvider}}</span>
             </p>
           </td>
           <td>
             <p>
               <span class="title">Master Size</span>
               <br/>
-              <span class="descriptor">{{pc.selectedProject.masterSize}}</span>
+              <span class="descriptor">{{apcf.project.master_size}}</span>
             </p>
           </td>
           <td>
             <p>
               <span class="title">Node Size</span>
               <br/>
-              <span class="descriptor">{{pc.selectedProject.nodeSize}}</span>
+              <span class="descriptor">{{apcf.project.node_size}}</span>
             </p>
           </td>
           <td>
             <p>
               <span class="title">No. of Nodes</span>
               <br/>
-              <span class="descriptor">{{pc.selectedProject.nodeNumbers}}</span>
+              <span class="descriptor">{{apcf.project.node_numbers}}</span>
             </p>
           </td>
           <td>
             <p>
               <span class="title">Volume Size</span>
               <br/>
-              <span class="descriptor">{{pc.selectedProject.volumeSize}}</span>
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <p>
-              <span class="title">App URL</span>
-              <br/>
-              <span class="descriptor">{{pc.selectedProject.app_url}}</span>
+              <span class="descriptor">{{apcf.project.volume_size}} GB</span>
             </p>
           </td>
         </tr>
@@ -85,10 +68,10 @@
       </div>
   </div>
 
- <div class="modal-footer">
-    <button type="submit" class="btn btn-primary"
-    ng-disabled="addProjectForm.$invalid">Deploy App from Existing Cluster</button>
-    <button class="btn btn-primary" ng-click="apc.cancel()">Deploy App Manually</button>
+ <div class="modal-footer" style="text-align:center;">
+    <button class="btn btn-primary" ng-click = "apcf.deployAppExisting()" style="height: 100px; margin: 10px; width: 140px;"
+    >Deploy App <br/>from <br/> Existing Cluster</button>
+    <button class="btn btn-success" ng-click = "apcf.deployAppManually()" style="height: 100px; margin: 10px; width: 140px;">Deploy App <br/> Manually</button>
   </div>
 
 </div>

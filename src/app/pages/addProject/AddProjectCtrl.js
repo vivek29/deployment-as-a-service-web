@@ -1,72 +1,304 @@
 
 
-angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrl', function($scope,$uibModalInstance,DataService, $window) {
-	var apc = this;
+angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne', function($scope,$uibModal,$uibModalInstance,DataService, $window) {
 
-	//$scope.step = 1;
-	//console.log("step no"+step);
-	//apc.setStep = function(step){
-//		$scope.step = step;
-		//console.log(step);
-	//};
+	var apco = this;
+
+	apco.cancel = function(){
+		$uibModalInstance.dismiss();			
+	};
+
+	apco.add = function(){
+
+		var project = {
+            projectName: $scope.projectTitle,
+            description: $scope.projectDescription,
+            cloudProvider: "AWS",
+            cloud_access_key: $scope.awsAccessKey,
+            cloud_secret_key: $scope.awsSecretKey
+        };
+
+		$uibModalInstance.dismiss();
+
+		var modalInstance1 = $uibModal.open({
+	      templateUrl : 'app/pages/addProject/addProject2.html',
+	      controller : 'AddProjectCtrlSec',
+	      controllerAs : 'apcs',
+	      resolve : {
+	        project : function() {
+	          return project;
+	        }
+	      },
+	      backdrop: 'static'
+	    });
+
+	    modalInstance1.result.then(function() {
+	    //  pc.getUserProjects();
+	    }, function() {
+	      //modal exited
+	    });
+	};
 
 
-	apc.initAddProject = function(){
-		$scope.projectTitle = "";
-		$scope.projectDescription = "";
-		$scope.addStyleTitle ="width:70%";
-		$scope.addStyleDescription ="width:70%";
-		
-		$scope.currentUser = $window.localStorage.currentUser;
+})
+.controller('AddProjectCtrlSec', function($scope,$uibModal,$uibModalInstance,DataService, project, $window) {
 
-		$scope.masterSize = "";
-		$scope.nodeSize = "";
-		$scope.nodeNumbers = "";
-		$scope.volumeSize - "";
+	var apcs = this;
+	apcs.instanceTypes = ['t2.nano','t2.micro','t2.small','t2.medium','t2.large',
+							'm4.large','m4.xlarge','m4.2xlarge','c4.large'];
+
+	apcs.cancel = function(){
+		$uibModalInstance.dismiss();
+	};
+
+	apcs.add = function(){
+	
+		project.master_size = $scope.masterSize;
+		project.node_size = $scope.nodeSize;
+		project.node_numbers = $scope.nodeNumbers;
+		project.volume_size = $scope.volumeSize;
+
+		$uibModalInstance.dismiss();
+
+		var modalInstance1 = $uibModal.open({
+	      templateUrl : 'app/pages/addProject/addProject3.html',
+	      controller : 'AddProjectCtrlThird',
+	      controllerAs : 'apct',
+	      resolve : {
+	        project : function() {
+	          return project;
+	        }
+	      },
+	      backdrop: 'static'
+	    });
+
+	    modalInstance1.result.then(function() {
+	    //  pc.getUserProjects();
+	    }, function() {
+	      //modal exited
+	    });
+
+
+	};
+})
+.controller('AddProjectCtrlThird', function($scope,$uibModal,$uibModalInstance,DataService, project, $window) {
+
+	var apct = this;
+	apct.disableContinue = true;
+	apct.downloadKey = false;
+	apct.loadingBlock = false;
+	apct.projectReadyMessage = false;
+
+	apct.progressMessage = "This might take some time...";
+
+	console.log(project);	
+
+	apct.initAddProject = function(){		
+
+		$scope.currentUser = angular.fromJson($window.localStorage.currentUser);
+		console.log($scope.currentUser.user_id);
+
+		DataService.postData(urlConstants.ADD_PROJECT+$scope.currentUser.user_id,project)
+		.success(function(data, headers) {
+
+			apct.loadingBlock = true;
+			apct.projectReadyMessage = true;
+			apct.downloadKey = true;
+			apct.disableContinue = false;
+
+			// see this once
+			$scope.key = headers('AWS_Key');
+
+			// see this also
+			project = angular.toJson(data);
+
+		}).error(function(err){
+			console.log(err);
+			$scope.formError = "Error while adding project.";
+		});		
+
+	}
+
+	apct.startDownloadingKey = function(){
+
+		// $scope.key = "jkdfhdsfkkshfsdff";
+		var link = document.createElement('a');
+		link.download = project.projectName+".pem";
+		var blob = new Blob([$scope.key], {type: 'text/plain'});
+		link.href = window.URL.createObjectURL(blob);
+		link.click();
+	}
+
+	apct.cancel = function(){
+		$uibModalInstance.dismiss();
+		$rootScope.$emit("GetUserProjects", {});
+	};
+
+	// remove this
+	apct.disableContinue = false;
+
+	apct.continue = function(){
+
+		$uibModalInstance.dismiss();
+
+		var modalInstance1 = $uibModal.open({
+	      templateUrl : 'app/pages/addProject/addProject4.html',
+	      controller : 'AddProjectCtrlFourth',
+	      controllerAs : 'apcf',
+	      resolve : {
+	        project : function() {
+	          return project;
+	        }
+	      },
+	      backdrop: 'static'
+	    });
+
+	    modalInstance1.result.then(function() {
+	    //  pc.getUserProjects();
+	    }, function() {
+	      //modal exited
+	    });
+
+
+	};
+})
+.controller('AddProjectCtrlFourth', function($scope, $rootScope,$location, $uibModal,$uibModalInstance,DataService, project, $window) {
+
+	var apcf = this;
+	console.log(project);
+	apcf.project = project;    
+
+	apcf.cancel = function(){
+		$uibModalInstance.dismiss();
+	};
+
+	apcf.deployAppExisting = function(){
+
+		$uibModalInstance.dismiss();
+
+		var modalInstance1 = $uibModal.open({
+	      templateUrl : 'app/pages/addProject/addProject5.html',
+	      controller : 'AddProjectCtrlFifth',
+	      controllerAs : 'apcfi',
+	      resolve : {
+	        project : function() {
+	          return project;
+	        }
+	      },
+	      backdrop: 'static'
+	    });
+
+	    modalInstance1.result.then(function() {
+	    //  pc.getUserProjects();
+	    }, function() {
+	    	$rootScope.$emit("GetUserProjects", {});
+	    });
+
+
+	};
+
+	apcf.deployAppManually = function(){
+
+		$uibModalInstance.dismiss();
+
+		// update projects on dashboard
+		$rootScope.$emit("GetUserProjects", {});
+
+		$location.path("/kubernetes");
+	};
+
+})
+.controller('AddProjectCtrlFifth', function($scope, $rootScope,$location, $uibModal,$uibModalInstance,DataService, project, $window) {
+
+	var apcfi = this;
+	console.log(project);
+	apcfi.project = project;    
+
+	apcfi.cancel = function(){
+		$uibModalInstance.dismiss();
+	};
+
+	apcfi.next = function(){
+
+		apcfi.project.old_clusterURL = $scope.masterURL;
+		apcfi.project.clusterMasterUsername = "admin";
+		apcfi.project.clusterMasterPassword = $scope.clusterPassword;
+
+		$uibModalInstance.dismiss();
+
+		var modalInstance1 = $uibModal.open({
+	      templateUrl : 'app/pages/addProject/addProject6.html',
+	      controller : 'AddProjectCtrlSixth',
+	      controllerAs : 'apcsi',
+	      resolve : {
+	        project : function() {
+	          return apcfi.project;
+	        }
+	      },
+	      backdrop: 'static'
+	    });
+
+	    modalInstance1.result.then(function() {
+	    //  pc.getUserProjects();
+	    }, function() {
+
+	    });
+
+
+	};
+
+})
+.controller('AddProjectCtrlSixth', function($scope, $rootScope,$location, $uibModal,$uibModalInstance,DataService, project, $window) {
+
+	var apcsi = this;
+	console.log(project);
+	apcsi.disableDeploy = true;
+	apcsi.loadingBlock = false;
+	apcsi.gotClusterInfo = true;
+
+//	apcsi.project = project;    
+
+	apcsi.init = function(){
+
 
 
 
 	}
-	apc.cancel = function(){
+
+	apcsi.cancel = function(){
 		$uibModalInstance.dismiss();
 	};
 
-	apc.add = function(){
-		console.log("in add function");
-		if ($scope.projectTitle.length==0){
-			$scope.titlePlaceholder ="Title can't be empty!";
-			$scope.addStyleTitle = "width:70%;border: 1px solid red";
-		}
-		if ($scope.projectDescription == 0){
-			$scope.descriptionPlaceholder = "Description can't be empty!";
-			$scope.addStyleDescription = "width:70%;border: 1px solid red";
-		}
+	apcsi.deploy = function(){
 
-		if ($scope.masterSize.length==0){
-			$scope.masterSizePlaceholder ="Master Size can't be empty!";
-			$scope.addStyleMasterSize = "width:70%;border: 1px solid red";
-		}
+		apcfi.project.old_clusterURL = $scope.masterURL;
+		apcfi.project.clusterMasterUsername = "admin";
 
+		$uibModalInstance.dismiss();
 
-		//add condition for masterSize 
-		if ($scope.projectTitle.length!=0 && $scope.projectDescription.length!=0){
-			console.log(1);
-			var queryParams = "?title="+$scope.projectTitle+"&description="+
-			$scope.projectDescription+"&user_id="+$window.localStorage.currentUserId;
+		var modalInstance1 = $uibModal.open({
+	      templateUrl : 'app/pages/addProject/addProject5.html',
+	      controller : 'AddProjectCtrlFifth',
+	      controllerAs : 'apcsi',
+	      resolve : {
+	        project : function() {
+	          return apcfi.project;
+	        }
+	      },
+	      backdrop: 'static'
+	    });
 
-			DataService.postData(urlConstants.PROJECTS+queryParams,{})
-			.success(function(data) {
-				console.log("data succ"+data);
-				$uibModalInstance.close('project added');
-			}).error(function(err){
-				console.log("data succ"+data);
-				$scope.formError = "Error while adding project.";
-			});
-		}
+	    modalInstance1.result.then(function() {
+	    //  pc.getUserProjects();
+	    }, function() {
 
-
-
+	    });
 
 
 	};
+
 });
+
+
+
+

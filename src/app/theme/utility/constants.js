@@ -10,6 +10,7 @@ var urlConstants = {
 	"UNIQUE_EMAIL" : hostName+"/daas/user/checkEmail/",
 	"UNIQUE_ORGNAME" : hostName+"/daas/user/checkOrg/",
 	"DAAS_USER" : hostName+"/daas/user/",
+	"ADD_PROJECT" : hostName+"/daas/project/add/"
 	
 };
 

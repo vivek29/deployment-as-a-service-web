@@ -69,6 +69,8 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
    */
   pc.getUserProjects = function(){
 
+    pc.currentUser = angular.fromJson($window.localStorage.currentUser);
+    
     // DUMMY DATA
     pc.userProjects = [{'project_id':'jdshakjdhsakd','projectName':'Project 1',
                   'description': 'This is a dummy project.','cloudProvider':'AWS',
@@ -107,6 +109,10 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     });
   };
 
+  $rootScope.$on("GetUserProjects", function(){
+     pc.getUserProjects();
+  });
+
   $scope.cardNumber = 0;
   $scope.selectProject = function($event,index, project) {
     
@@ -130,9 +136,10 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
 
   pc.addProject = function (){
     var modalInstance1 = $uibModal.open({
-      templateUrl : 'app/pages/addProject/addProject.html',
-      controller : 'AddProjectCtrl',
-      controllerAs : 'apc'
+      templateUrl : 'app/pages/addProject/addProject1.html',
+      controller : 'AddProjectCtrlOne',
+      controllerAs : 'apco',
+      backdrop: 'static'
     });
 
     modalInstance1.result.then(function() {
