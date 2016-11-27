@@ -1,33 +1,55 @@
 <div ng-controller="ProjectController as pc" ng-init="pc.getProjectDetails()">
     <div class="container">
-        <div ng-if="pc.userProjects.length==0" class="row">
+        <div ng-if="pc.userProjects.length!=0" class="row">
+          <div class="col-md-11">
             <div class="row borderBottomLine" style="margin-top:15px; margin-bottom:15px;">
               <div class="col-md-8">
                 <h2>Dashboard
                 </h2>
               </div>
-            </div>  
+            </div>
             <div>
               <span class='h1'>&nbsp;</span> <span class='h1'>&nbsp;</span>
               <h3 class="text-center">
                 You don't have any projects yet. Click the button
                   below to add a project.
               </h3>
-              <span class='h1'>&nbsp;<br>&nbsp;
+              <span class='h1'>&nbsp;
               </span>
               <button class="btn btn-primary btn-lg center-block" ng-click="pc.addProject()">
                   <span class='glyphicon glyphicon-plus'></span> Add a Project
               </button>
+              <span class='h1'>&nbsp;</span> <span class='h1'>&nbsp;</span>
             </div>
-
             <!--
-                    Add a informative flow for creating kube project or something.
+                    Informative flow for creating kube project.
             -->
-
+              <div class="row borderBottomLine" style="margin-top:15px; margin-bottom:15px;">
+                <div class="col-md-8">
+                  <h2>Migrate to Cloud in 3 easy steps:
+                  </h2>
+                </div>
+              </div>
+            <div class="row">
+               <div class="col-sm-4">
+                  <h5 align="center">1. Provide Kubernetes Cluster Info</h4>
+                  <div class="img-wrapper"><img ng-src="assets/img/module_01.png" alt="" src="assets/img/module_01.png" height="180" width="120"></div>
+               </div>
+               <div class="col-sm-4">
+                  <h5 align="center">2. Migrate Deployment or Create New</h4>
+                  <div class="img-wrapper"><img ng-src="assets/img/module_02.png" alt="" src="assets/img/module_02.png" height="180" width="120"></div>
+               </div>
+               <div class="col-sm-4">
+                  <h5 align="center">3. Manage & Monitor Cluster</h4>
+                  <div class="img-wrapper"><img ng-src="assets/img/module_03.png" alt="" src="assets/img/module_03.png" height="180" width="120"></div>
+               </div>
+            </div>
+            <div class="separator"></div>
+            </div>
         </div>
 
-        
-        <div ng-if="pc.userProjects.length!=0" class="row">
+
+        <div ng-if="pc.userProjects.length==0" class="row">
             <div class="row" style="margin-top:15px; margin-bottom:15px;">
                 <div class="col-md-8 borderBottomLine">
                     <h2>Dashboard
@@ -129,7 +151,7 @@
                 <div class="panel panel-default bootstrap-panel  animated zoomIn">
                     <div class="panel-body borderBottom">
                         <p class="borderBottomLine" style="color:#1b867b;">CPU Utilization</p>
-                        
+
                         <p>
                             <iframe src="https://admin:isqcZCIzrAsGlzKI@35.164.84.248/ui" height="300" width="100%"></iframe>
                         </p>
@@ -161,7 +183,7 @@
                           </div>
                         </form>
                         </div>
-                        
+
                         <div class="ng-scope">
                                 <div class="panel panel-default bootstrap-panel cards"  ng-click="selectProject($event,$index, project)" ng-repeat="project in pc.userProjects  | filter: searchKeyword ">
                                     <div class="panel-body borderBottom-small" ng-class="{ selectedCard: $index == cardNumber }">
