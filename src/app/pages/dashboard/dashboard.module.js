@@ -129,7 +129,6 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
   };
 
   pc.addProject = function (){
-    console.log("inside addproject");
     var modalInstance1 = $uibModal.open({
       templateUrl : 'app/pages/addProject/addProject.html',
       controller : 'AddProjectCtrl',
