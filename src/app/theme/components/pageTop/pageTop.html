@@ -1,5 +1,6 @@
 <div class="page-top"  scroll-position="scrolled" max-height="50" ng-class="{'scrolled': scrolled}">
     <a href="/home" class="al-logo clearfix"><span><i class="fa fa-cloud" aria-hidden="true"></i>&nbsp;DaaS</span></a>
+
     <div style="display:inline-block;float:right;padding-top:10px;" ng-hide="profileButtonVisible">
         <a href="/login" ng-hide="profileButtonVisible" class="ng-show">
             <div class="button-wrapper ng-scope" style="width:100px; float:left;">
@@ -18,10 +19,14 @@
     </div>
 
     <div class="user-profile clearfix" ng-hide="!profileButtonVisible" class="ng-show">
+        <div style="position: absolute;right: 195px;top: 23px;font-size: large;">
+            <a href= "/dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i> &nbsp; Dashboard </a>
+        </div>
+
         <div class="al-user-profile" uib-dropdown >
             <a uib-dropdown-toggle class="profile-toggle-link"> <img ng-src="{{::( 'user' | profilePicture )}}">
             </a>
-            <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu >
+            <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
                 <li><i class="dropdown-arr"></i></li>
                 <li><a href><i class="fa fa-user"></i>Profile</a></li>
                 <li ng-hide="!profileButtonVisible" class="ng-show"><a href><i
@@ -29,7 +34,24 @@
                 <li ng-hide="!profileButtonVisible" class="ng-show"><a href="/logout" class="signout"><i class="fa fa-power-off"></i>Logout</a></li>
             </ul>
         </div>
-        <div style="padding-top: 15px;"><strong> {{currentUser.email}}</strong></div>
+
+        <div class="al-user-profile" uib-dropdown style="position: absolute;top: 25px;right: 120px;">
+            <a uib-dropdown-toggle class="profile-toggle-link" style="display: inline-block;
+    width: 70px;">Support&nbsp;<i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu style="top: 38px;
+    right: -50px;">
+                <li><i class="dropdown-arr"></i></li>
+                <li><a href>Support Center</a></li>
+                <li><a href>Forums</a></li>
+                <li><a href>Documentation</a></li>
+                <li><a href>Other Resources</a></li>
+            </ul>
+        </div>
+
+        
+
+        <div style="position: absolute;padding-top: 15px;right: 350px;"><strong> {{currentUser.email}}</strong></div>
     </div>
 
 

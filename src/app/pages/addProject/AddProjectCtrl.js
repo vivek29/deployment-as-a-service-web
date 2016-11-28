@@ -28,8 +28,6 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
             Aws_key : $scope.awsKey
         };
 
-        console.log(project);
-
 		$uibModalInstance.dismiss();
 
 		var modalInstance1 = $uibModal.open({
