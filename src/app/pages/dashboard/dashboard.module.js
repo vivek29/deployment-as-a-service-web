@@ -70,28 +70,28 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
   pc.getUserProjects = function(){
 
     pc.currentUser = angular.fromJson($window.localStorage.currentUser);
-    
+
     // DUMMY DATA
     pc.userProjects = [{'project_id':'jdshakjdhsakd','projectName':'Project 1',
                   'description': 'This is a dummy project.','cloudProvider':'AWS',
                   'dateCreated': '18 Nov 2016', 'project_url':'http://12.34.56.78:9876',
-                  'app_url': 'http://98.43.55.65:8000', 'masterSize':'t1.large',
-                  'nodeSize':'t2.micro', 'nodeNumbers': '3', 'volumeSize': '20 GB'},
+                  'app_url': 'http://98.43.55.65:8000', 'master_size':'t1.large',
+                  'node_size':'t2.micro', 'node_numbers': '3', 'volume_size': '20'},
                   {'project_id':'iyyyqewyiq','projectName':'Kube Project 2',
                   'description': 'This is a dummy project.','cloudProvider':'AWS',
                   'dateCreated': '19 Nov 2016', 'project_url':'http://65.34.59.78:9276',
-                  'app_url': 'http://88.47.59.69:8080', 'masterSize':'t1.large',
-                  'nodeSize':'t2.micro', 'nodeNumbers': '2', 'volumeSize': '200 GB'},
+                  'app_url': undefined, 'master_size':'t1.large',
+                  'node_size':'t2.micro', 'node_numbers': '2', 'volume_size': '200'},
                   {'project_id':'bndmnasdb','projectName':'Cloud Project 3',
                   'description': 'This is a dummy project.','cloudProvider':'AWS',
                   'dateCreated': '20 Nov 2016', 'project_url':'http://88.96.76.78:9676',
-                  'app_url': 'http://48.43.22.76:8000', 'masterSize':'t1.large',
-                  'nodeSize':'t2.micro', 'nodeNumbers': '3', 'volumeSize': '40 GB'},
+                  'app_url': 'http://48.43.22.76:8000', 'master_size':'t1.large',
+                  'node_size':'t2.micro', 'node_numbers': '3', 'volume_size': '40'},
                   {'project_id':'opoptyoptoypt','projectName':'Project 4',
                   'description': 'This is a dummy project.','cloudProvider':'AWS',
                   'dateCreated': '21 Nov 2016', 'project_url':'http://15.38.53.75:9696',
-                  'app_url': 'http://98.43.51.69:8000', 'masterSize':'t1.large',
-                  'nodeSize':'t2.micro', 'nodeNumbers': '1', 'volumeSize': '200 GB'}];
+                  'app_url': 'http://98.43.51.69:8000', 'master_size':'t1.large',
+                  'node_size':'t2.micro', 'node_numbers': '1', 'volume_size': '200'}];
 
     // default, first project in the list.
     pc.selectedProject = pc.userProjects[0];              
@@ -171,6 +171,28 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     }, function() {
       //modal exited
     });
+  };
+
+  pc.deployApp = function(project){
+
+    var modalInstance1 = $uibModal.open({
+      templateUrl : 'app/pages/addProject/addProject5.html',
+      controller : 'AddProjectCtrlFifth',
+      controllerAs : 'apcfi',
+      resolve : {
+        project : function() {
+          return project;
+        }
+      },
+      backdrop: 'static'
+    });
+
+    modalInstance1.result.then(function() {
+    //  pc.getUserProjects();
+    }, function() {
+      $rootScope.$emit("GetUserProjects", {});
+    });
+
   };
 
   pc.goToCluster = function(project_url) {

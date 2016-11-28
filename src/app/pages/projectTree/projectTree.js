@@ -9,18 +9,18 @@ angular.module('BlurAdmin.pages.projectTree', []).controller('ProjectTreeCtrl', 
 	ptc.init = function(){
 
 		var children = [];
-		for (i = 0; i < project.nodeNumbers; i++) {
+		for (i = 0; i < project.node_numbers; i++) {
 	    	children.push({
-	    		"name": "Node Size: "+project.nodeSize			
+	    		"name": "Node Size: "+project.node_size			
 	    	});
 		}
 		children.push({
-			"name": "Volume Size: "+project.volumeSize
+			"name": "Volume Size: "+project.volume_size+ " GB"
 		})
 
 		var treeData = [
 						  {
-						    "name": "Cluster Master: "+project.masterSize,
+						    "name": "Cluster Master: "+project.master_size,
 						    "children": children
 						  }
 						];

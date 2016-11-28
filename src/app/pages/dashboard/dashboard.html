@@ -90,28 +90,28 @@
                                     <p>
                                         <span class="title">Master Size</span>
                                         <br/>
-                                        <span class="descriptor">{{pc.selectedProject.masterSize}}</span>
+                                        <span class="descriptor">{{pc.selectedProject.master_size}}</span>
                                     </p>
                                 </td>
                                 <td>
                                     <p>
                                         <span class="title">Node Size</span>
                                         <br/>
-                                        <span class="descriptor">{{pc.selectedProject.nodeSize}}</span>
+                                        <span class="descriptor">{{pc.selectedProject.node_size}}</span>
                                     </p>
                                 </td>
                                 <td>
                                     <p>
                                         <span class="title">No. of Nodes</span>
                                         <br/>
-                                        <span class="descriptor">{{pc.selectedProject.nodeNumbers}}</span>
+                                        <span class="descriptor">{{pc.selectedProject.node_numbers}}</span>
                                     </p>
                                 </td>
                                  <td>
                                     <p>
                                         <span class="title">Volume Size</span>
                                         <br/>
-                                        <span class="descriptor">{{pc.selectedProject.volumeSize}}</span>
+                                        <span class="descriptor">{{pc.selectedProject.volume_size}} GB</span>
                                     </p>
                                 </td>
                                 <td>
@@ -124,11 +124,17 @@
                             </tr>
                             <tr>
                                 <td colspan=2>
-                                    <p>
+                                    <p ng-if="pc.selectedProject.app_url!=undefined" class="descriptor">
                                         <span class="title">App URL</span>
                                         <br/>
-                                        <span class="descriptor">{{pc.selectedProject.app_url}}</span>
+                                        <span class="descriptor">{{pc.selectedProject.app_url}}</span> <a href="{{pc.selectedProject.app_url}}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>                                       
                                     </p>
+                                    <p ng-if="pc.selectedProject.app_url===undefined" style="margin-top:10px;">
+                                        <button class="btn btn-primary btn-sm" ng-click="pc.deployApp(pc.selectedProject)">
+                                            Deploy App from Existing Cluster
+                                        </button>
+                                    </p>
+
                                 </td>
                                 <td colspan=2>
                                     <p style="margin-top:10px;">

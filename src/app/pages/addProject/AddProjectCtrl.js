@@ -1,8 +1,17 @@
 
 
-angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne', function($scope,$uibModal,$uibModalInstance,DataService, $window) {
+angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne', function($scope, $rootScope,$uibModal,$uibModalInstance,DataService, $window) {
 
 	var apco = this;
+
+	apco.userProjects = $rootScope.userAllProjects;
+
+	if(apco.userProjects.length ==0) {
+		apco.isFirstProject = true;
+	}
+	else{
+		apco.isFirstProject = false;
+	}
 
 	apco.cancel = function(){
 		$uibModalInstance.dismiss();			
@@ -15,8 +24,11 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
             description: $scope.projectDescription,
             cloudProvider: "AWS",
             cloud_access_key: $scope.awsAccessKey,
-            cloud_secret_key: $scope.awsSecretKey
+            cloud_secret_key: $scope.awsSecretKey,
+            Aws_key : $scope.awsKey
         };
+
+        console.log(project);
 
 		$uibModalInstance.dismiss();
 
@@ -81,7 +93,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	};
 })
-.controller('AddProjectCtrlThird', function($scope,$uibModal,$uibModalInstance,DataService, project, $window) {
+.controller('AddProjectCtrlThird', function($scope,$rootScope,$uibModal,$uibModalInstance,DataService, project, $window) {
 
 	var apct = this;
 	apct.disableContinue = true;
@@ -356,29 +368,31 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	var apcse = this;
 	console.log(project);
+	apcse.project = project;
 
 	apcse.loadingBlock = false;
 	apcse.disableClose = true;
-	apcse.loadingMessage = "Hang tight! Deploying your application..";
+	apcse.gotAppURL = false;			
+	apcse.loadingMessage = "Please wait.. Deploying your application..";
 
 	apcse.init = function(){
 
-		DataService.postData(urlConstants.DEPLOY_APP+project.project_id,project)
+		DataService.postData(urlConstants.DEPLOY_APP+apcse.project.project_id,apcse.project)
 		.success(function(data) {
 
 			apcse.loadingBlock = true;
-			apcse.disableClose = false;
+			apcse.disableClose = false;			
 			apcse.loadingMessage = "Your app is now deployed...";
+			apcse.gotAppURL = true;			
 
 			// see this also
-			project = angular.toJson(data);
+			apcse.project = angular.toJson(data);
 
 		}).error(function(err){
 			console.log(err);
 		});
 
 	}
-
 
 	apcse.cancel = function(){
 		$uibModalInstance.dismiss();

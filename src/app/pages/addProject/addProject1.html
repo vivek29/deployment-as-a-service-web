@@ -95,6 +95,26 @@
         </div>
 
       </div>
+      <div class="row" ng-hide = "apco.isFirstProject">
+
+        <div class="col-xs-3" style="color:#1b867b;">Upload Mgmt. Server Key</div>
+        <div class="col-xs-1">:</div>
+        <div class="col-xs-8 form-group has-feedback"
+          ng-class="{'has-error' : addProjectForm.awsKey.$invalid && addProjectForm.awsKey.$dirty }">
+          <input class="form-control" type="file" name="awsKey"
+            file-reader="awsKey" required />  
+        </div>
+
+        <div class="col-xs-3"></div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.awsKey.$error" role="alert"
+          ng-if="addProjectForm.awsKey.$dirty">
+          <div ng-message="required">Your must upload the Management Server's key
+          </div>
+        </div>
+
+      </div>
 
       </form>
       <div class="modal-footer">
