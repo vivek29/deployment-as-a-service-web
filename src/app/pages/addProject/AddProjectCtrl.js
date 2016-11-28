@@ -106,18 +106,18 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 		$scope.currentUser = angular.fromJson($window.localStorage.currentUser);
 
 		DataService.postData(urlConstants.ADD_PROJECT+$scope.currentUser.user_id,project)
-		.success(function(data, headers) {
+		.success(function(data) {
 
 			apct.loadingBlock = true;
 			apct.projectReadyMessage = true;
 			apct.downloadKey = true;
 			apct.disableContinue = false;
 
-			// see this once
-			$scope.key = headers('AWS_Key');
-
 			// see this also
 			project = angular.toJson(data);
+
+			// see this once
+			$scope.key = project.Aws_key;
 
 		}).error(function(err){
 			console.log(err);
