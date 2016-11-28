@@ -14,7 +14,7 @@
       controller: function($scope, $window){
         
         $scope.currentUser = angular.fromJson($window.localStorage.currentUser);
-        
+        console.log($scope.currentUser);
       }
     };
   }

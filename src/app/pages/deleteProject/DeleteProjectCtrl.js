@@ -1,13 +1,13 @@
 
 
-angular.module('BlurAdmin.pages.deleteProject', []).controller('DeleteProjectCtrl', function($scope,$uibModalInstance,project,DataService) {
+angular.module('BlurAdmin.pages.deleteProject', []).controller('DeleteProjectCtrl', function($scope,$window,$uibModalInstance,project,DataService) {
+
 	var dpc = this;
-	console.log(project.project_id);
+	dpc.currentUser = angular.fromJson($window.localStorage.currentUser);
 
 	dpc.okay = function(){
-		var urlParams = "/"+project.project_id;
-		DataService.deleteData(urlConstants.PROJECTS+urlParams,{}).success(function(data){
-			console.log("delete project succesfull");
+
+		DataService.deleteData(urlConstants.DELETE_PROJECT+dpc.currentUser.user_id,project).success(function(data){
 			console.log(data);
 			$uibModalInstance.close();
 		}).error(function(err){

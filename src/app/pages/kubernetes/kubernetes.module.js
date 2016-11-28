@@ -46,9 +46,7 @@ var kubernetes = angular.module('BlurAdmin.pages.kubernetes', [])
     else{
       $rootScope.profileButtonVisible=true;
        kc.userProjects = $rootScope.userAllProjects;
-       kc.selectedProject = kc.userProjects[0];
-
-       
+       kc.selectedProject = kc.userProjects[0];  
     }
     
   };

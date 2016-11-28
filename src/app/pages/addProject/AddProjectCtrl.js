@@ -101,12 +101,9 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apct.progressMessage = "This might take some time...";
 
-	console.log(project);	
-
 	apct.initAddProject = function(){		
 
 		$scope.currentUser = angular.fromJson($window.localStorage.currentUser);
-		console.log($scope.currentUser.user_id);
 
 		DataService.postData(urlConstants.ADD_PROJECT+$scope.currentUser.user_id,project)
 		.success(function(data, headers) {
@@ -143,9 +140,6 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 		$uibModalInstance.dismiss();
 		$rootScope.$emit("GetUserProjects", {});
 	};
-
-	// remove this
-	apct.disableContinue = false;
 
 	apct.continue = function(){
 
@@ -253,8 +247,6 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	    }, function() {
 
 	    });
-
-
 	};
 
 })
@@ -264,13 +256,15 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	console.log(project);
 	// initialize replicas with existing values
 	apcsi.replicas = [];
-//	apcsi.disableDeploy = true;
-//	apcsi.loadingMessage = false;
-//	apcsi.loadingBlock = false;
-//	apcsi.gotClusterInfo = false;
-//	apcsi.clusterServices = [];
-//	apcsi.clusterDeployments = [];
+	apcsi.disableDeploy = true;
+	apcsi.loadingMessage = false;
+	apcsi.loadingBlock = false;
+	apcsi.gotClusterInfo = false;
+	apcsi.clusterServices = [];
+	apcsi.clusterDeployments = [];
 
+
+/*
 	// remove this
 	apcsi.loadingBlock = true;
 	apcsi.loadingMessage = true;
@@ -292,9 +286,11 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 								'volumes' : {'name': undefined}}}}
 	];
 
+
 	for(var i=0; i<apcsi.clusterDeployments.length;i++){
 		apcsi.replicas.push(apcsi.clusterDeployments[i].spec.replicas);
 	}
+*/
 
 //	apcsi.project = project;    
 
@@ -365,7 +361,6 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 .controller('AddProjectCtrlSeventh', function($scope, $rootScope,$location, $uibModal,$uibModalInstance,DataService, project, $window) {
 
 	var apcse = this;
-	console.log(project);
 	apcse.project = project;
 
 	apcse.loadingBlock = false;
@@ -395,7 +390,6 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	apcse.cancel = function(){
 		$uibModalInstance.dismiss();
 	};
-
 
 });
 
