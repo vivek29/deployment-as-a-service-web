@@ -1,6 +1,6 @@
 <div ng-controller="ProjectController as pc" ng-init="pc.getProjectDetails()">
     <div class="container">
-        <div ng-if="pc.userProjects.length!=0" class="row">
+        <div ng-if="pc.userProjects.length==0" class="row">
           <div class="col-md-11">
             <div class="row borderBottomLine" style="margin-top:15px; margin-bottom:15px;">
               <div class="col-md-8">
@@ -49,7 +49,7 @@
         </div>
 
 
-        <div ng-if="pc.userProjects.length==0" class="row">
+        <div ng-if="pc.userProjects.length!=0" class="row">
             <div class="row" style="margin-top:15px; margin-bottom:15px;">
                 <div class="col-md-8 borderBottomLine">
                     <h2>Dashboard

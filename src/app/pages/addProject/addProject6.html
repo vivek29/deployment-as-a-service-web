@@ -14,18 +14,68 @@
     <div class="ex"></div>      
   </div>
 
-  <h4 style = "text-align:center; margin-bottom:25px;">Hang tight! Getting the cluster information..</h4>
+  <h4 ng-hide="apcsi.loadingMessage" style = "text-align:center; margin-bottom:25px;">Hang tight! Getting the cluster information..</h4>
 
-  <div ng-hide="gotClusterInfo">
+  <div ng-show="apcsi.gotClusterInfo">
 
     <div>
-
+      <h3 style="color:#1b867b;">Services</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th> 
+            <th>Name</th>
+            <th>Port</th>
+            <th>Target Port</th>
+            <th>Type</th>
+          </tr>    
+        </thead>
+        <tbody>
+          <tr ng-repeat="service in apcsi.clusterServices">
+            <td>{{ $index+1 }}</td>
+            <td>{{ service.metadata.name }}</td>
+            <td>{{ service.spec.ports.port }}</td>
+            <td>{{ service.spec.ports.targetPort }}</td>
+            <td ng-if="service.spec.type!=undefined">{{ service.spec.type }}</td>
+            <td ng-if="service.spec.type===undefined"> - </td>        
+      </tr>
+        </tbody>
+      
+    </table>
     </div>
+
+    <div style="margin-top: 25px; margin-bottom: 30px;">
+      <h3 style="color:#1b867b;">Deployments</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th> 
+            <th>Name</th>
+            <th>Image</th>
+            <th>Container Port</th>
+            <th>Volume Name</th>
+            <th>Replicas</th>
+          </tr>    
+        </thead>
+         <tbody>
+          <tr ng-repeat="deployment in apcsi.clusterDeployments">
+            <td>{{ $index+1 }}</td>
+            <td>{{ deployment.metadata.name }}</td>
+            <td>{{ deployment.spec.spec.containers.image }}</td>
+            <td>{{ deployment.spec.spec.containers.ports.containerPort }}</td>
+            <td ng-if="deployment.spec.spec.volumes.name!=undefined">{{ deployment.spec.spec.volumes.name }}</td>
+            <td ng-if="deployment.spec.spec.volumes.name===undefined"> - </td>
+            <td  style= "vertical-align: middle;"><input type="number" ng-value="deployment.spec.replicas" ng-model="apcsi.replicas[$index]" style="width: 40px; height: 30px;"></td>                    
+          </tr>
+         </tbody> 
+    </table>
+    <h6 style="margin-top: 5px;"> Note: You can change the number of replicas above.</h6>
+    </div>    
 
   </div>
   
   <div class="modal-footer">
-    <button type="submit" class="btn btn-primary" ng-click="apcsi.deploy()"
+    <button type="submit" class="btn btn-primary" ng-click="apcsi.deployApp()"
     ng-disabled="apcsi.disableDeploy">Deploy App</button>
     <button class="btn btn-danger" ng-click="apcsi.cancel()">Cancel</button>
   </div>

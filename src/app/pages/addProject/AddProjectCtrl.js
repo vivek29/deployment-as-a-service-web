@@ -252,16 +252,64 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	var apcsi = this;
 	console.log(project);
-	apcsi.disableDeploy = true;
-	apcsi.loadingBlock = false;
+	// initialize replicas with existing values
+	apcsi.replicas = [];
+//	apcsi.disableDeploy = true;
+//	apcsi.loadingMessage = false;
+//	apcsi.loadingBlock = false;
+//	apcsi.gotClusterInfo = false;
+//	apcsi.clusterServices = [];
+//	apcsi.clusterDeployments = [];
+
+	// remove this
+	apcsi.loadingBlock = true;
+	apcsi.loadingMessage = true;
+	apcsi.disableDeploy = false;
 	apcsi.gotClusterInfo = true;
+
+	// DUMMY DATA
+	apcsi.clusterServices = [{'apiVersion' : 'v1', 'kind': 'Service', 'metadata' : {'name': 'web','labels':{'name' : 'web'}},
+								'spec' : {'type': 'LoadBalancer','ports': {'port': '80','targetPort' : '3000','protocol': 'TCP'}}},
+							  {'apiVersion' : 'v1', 'kind': 'Service', 'metadata' : {'name': 'mongo','labels':{'name' : 'mongo'}},
+								'spec' : {'type': undefined,'ports': {'port': '27017','targetPort' : '27017','protocol': undefined}}}	
+	];
+
+	apcsi.clusterDeployments = [{'apiVersion' : 'extensions/v1beta1', 'kind': 'Deployment', 'metadata' : {'name': 'mongo-deployment'},
+								'spec' : {'replicas' : 1,'spec': {'containers': {'image' : 'mongo', 'ports' : {'name': 'mongo','containerPort' : '27017'}},
+								'volumes' : {'name': 'mongo-persistent-storage'}}}},
+								{'apiVersion' : 'extensions/v1beta1', 'kind': 'Deployment', 'metadata' : {'name': 'web-deployment'},
+								'spec' : {'replicas' : 2,'spec': {'containers': {'image' : 'gcr.io/kube-mean/myapp', 'ports' : {'name': 'http-server','containerPort' : '3000'}},
+								'volumes' : {'name': undefined}}}}
+	];
+
+	for(var i=0; i<apcsi.clusterDeployments.length;i++){
+		apcsi.replicas.push(apcsi.clusterDeployments[i].spec.replicas);
+	}
 
 //	apcsi.project = project;    
 
 	apcsi.init = function(){
 
+		DataService.getData(urlConstants.GET_CLUSTER_DETAILS+project.project_id,project)
+		.success(function(data) {
 
+			// see this
+			project = angular.toJson(data);
+			apcsi.clusterServices = project.services;
+			apcsi.clusterDeployments = project.deployments;
 
+			for(var i=0; i<apcsi.clusterDeployments.length;i++){
+				apcsi.replicas.push(apcsi.clusterDeployments[i].spec.replicas);
+			}
+
+			apcsi.loadingBlock = true;
+			apcsi.disableDeploy = false;
+			apcsi.gotClusterInfo = true;
+			apcsi.loadingMessage = true;
+
+		}).error(function(err){
+			console.log(err);
+		});			
 
 	}
 
@@ -269,20 +317,27 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 		$uibModalInstance.dismiss();
 	};
 
-	apcsi.deploy = function(){
+	apcsi.deployApp = function(){
 
-		apcfi.project.old_clusterURL = $scope.masterURL;
-		apcfi.project.clusterMasterUsername = "admin";
+		// get number of replicas for deployments
+		apcsi.finalReplicas = apcsi.replicas;
+
+		for(var i=0;i<apcsi.finalReplicas.length;i++){
+			apcsi.clusterDeployments[i].spec.replicas = apcsi.finalReplicas[i];
+		}
+
+		// update project
+		project.deployments = apcsi.clusterDeployments;
 
 		$uibModalInstance.dismiss();
 
 		var modalInstance1 = $uibModal.open({
-	      templateUrl : 'app/pages/addProject/addProject5.html',
-	      controller : 'AddProjectCtrlFifth',
-	      controllerAs : 'apcsi',
+	      templateUrl : 'app/pages/addProject/addProject7.html',
+	      controller : 'AddProjectCtrlSeventh',
+	      controllerAs : 'apcse',
 	      resolve : {
 	        project : function() {
-	          return apcfi.project;
+	          return project;
 	        }
 	      },
 	      backdrop: 'static'
@@ -294,8 +349,41 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	    });
 
-
 	};
+
+})
+.controller('AddProjectCtrlSeventh', function($scope, $rootScope,$location, $uibModal,$uibModalInstance,DataService, project, $window) {
+
+	var apcse = this;
+	console.log(project);
+
+	apcse.loadingBlock = false;
+	apcse.disableClose = true;
+	apcse.loadingMessage = "Hang tight! Deploying your application..";
+
+	apcse.init = function(){
+
+		DataService.postData(urlConstants.DEPLOY_APP+project.project_id,project)
+		.success(function(data) {
+
+			apcse.loadingBlock = true;
+			apcse.disableClose = false;
+			apcse.loadingMessage = "Your app is now deployed...";
+
+			// see this also
+			project = angular.toJson(data);
+
+		}).error(function(err){
+			console.log(err);
+		});
+
+	}
+
+
+	apcse.cancel = function(){
+		$uibModalInstance.dismiss();
+	};
+
 
 });
 
