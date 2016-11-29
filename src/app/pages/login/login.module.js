@@ -24,11 +24,9 @@
                 email: $scope.email,
                 password: $scope.password
             };
-            console.log(params);
             $scope.isDisabled = true;
             DataService.postData(urlConstants.LOGIN, params)
             .success(function(data) {
-                console.log(data);
                 $window.localStorage.currentUser = angular.toJson(data);
                 $location.path('/dashboard');
             }).error(function(err){

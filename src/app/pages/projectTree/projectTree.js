@@ -11,21 +11,22 @@ angular.module('BlurAdmin.pages.projectTree', []).controller('ProjectTreeCtrl', 
 		var children = [];
 		for (i = 0; i < project.node_numbers; i++) {
 	    	children.push({
-	    		"name": "Node Size: "+project.node_size			
+	    		"name": "Node Size: "+project.node_size,
+	    		"icon": "node.png"			
 	    	});
 		}
 		children.push({
-			"name": "Volume Size: "+project.volume_size+ " GB"
+			"name": "Volume Size: "+project.volume_size+ " GB",
+			"icon": "Volume.png"
 		})
 
 		var treeData = [
 						  {
 						    "name": "Cluster Master: "+project.master_size,
-						    "children": children
+						    "children": children,
+						    "icon": "master.png"
 						  }
 						];
-
-		console.log(treeData);				
 
 		// ************** Generate the tree diagram	 *****************
 		var margin = {top: 20, right: 120, bottom: 20, left: 300},
@@ -75,12 +76,18 @@ angular.module('BlurAdmin.pages.projectTree', []).controller('ProjectTreeCtrl', 
 			  .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
 			  .on("click", click);
 
-		  nodeEnter.append("circle")
-			  .attr("r", 1e-6)
-			  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+		  nodeEnter.append("image")
+		      .attr("xlink:href", function(d) { return "../assets/img/"+ d.icon; })
+		      .attr("x", "-16px")
+		      .attr("y", "-16px")
+		      .attr("width", "32px")
+		      .attr("height", "32px");		  	  
+
+			//  .attr("r", 1e-6)
+			//  .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
 		  nodeEnter.append("text")
-			  .attr("x", function(d) { return d.children || d._children ? -13 : 13; })
+			  .attr("x", function(d) { return d.children || d._children ? -17 : 17; })
 			  .attr("dy", ".35em")
 			  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
 			  .text(function(d) { return d.name; })
