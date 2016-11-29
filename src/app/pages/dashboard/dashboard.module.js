@@ -39,7 +39,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
   pc.getProjectDetails = function() {
 
     pc.currentUser = angular.fromJson($window.localStorage.currentUser);
-    $rootScope.profileButtonVisible=true;
+//    $rootScope.profileButtonVisible=true;
 //    pc.getUserProjects();
 
     // if local storage is empty, redirect to login page
@@ -104,6 +104,12 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
     .success(function(data) {
       pc.userProjects = data;
       pc.selectedProject = pc.userProjects[0];
+
+      // TODO: 
+      // pc.cpuUtilUrl = "https://";
+      // pc.memoryUtilUrl = "https://";
+
+      console.log(pc.userProjects);
       $rootScope.userAllProjects = pc.userProjects;
     }).error(function(err){
       console.log(err);

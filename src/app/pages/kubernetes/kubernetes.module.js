@@ -46,7 +46,8 @@ var kubernetes = angular.module('BlurAdmin.pages.kubernetes', [])
     else{
       $rootScope.profileButtonVisible=true;
        kc.userProjects = $rootScope.userAllProjects;
-       kc.selectedProject = kc.userProjects[0];  
+       kc.selectedProject = kc.userProjects[0];
+       kc.kube_url = "https://"+kc.selectedProject.project_username+":"+kc.selectedProject.project_password+"@"+kc.selectedProject.project_url+"/ui";  
     }
     
   };
@@ -56,6 +57,7 @@ var kubernetes = angular.module('BlurAdmin.pages.kubernetes', [])
     
     kc.userProjects = kc.userProjects.move(index, 0);
     kc.selectedProject = project;
+    kc.kube_url = "https://"+kc.selectedProject.project_username+":"+kc.selectedProject.project_password+"@"+kc.selectedProject.project_url+"/ui";
 
     $window.scrollTo(0, 0);
     angular.element("#scrollToTop")[0].scrollTop=0;    

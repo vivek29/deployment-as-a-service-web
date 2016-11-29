@@ -98,8 +98,9 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	apct.downloadKey = false;
 	apct.loadingBlock = false;
 	apct.projectReadyMessage = false;
+	apct.pm = false;
 
-	apct.progressMessage = "This might take some time...";
+	apct.progressMessage = "This will take some time(approx 30-40 mins)...";
 
 	apct.initAddProject = function(){		
 
@@ -109,6 +110,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 		.success(function(data) {
 
 			apct.loadingBlock = true;
+			apct.pm = true;
 			apct.projectReadyMessage = true;
 			apct.downloadKey = true;
 			apct.disableContinue = false;

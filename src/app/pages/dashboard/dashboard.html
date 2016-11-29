@@ -1,6 +1,6 @@
 <div ng-controller="ProjectController as pc" ng-init="pc.getProjectDetails()">
-    <div class="container">
-        <div ng-if="pc.userProjects.length==0" class="row">
+    <div class="container" ng-hide="!profileButtonVisible">
+        <div ng-show="pc.userProjects.length==0" class="row">
           <div class="col-md-11">
             <div class="row borderBottomLine" style="margin-top:15px; margin-bottom:15px;">
               <div class="col-md-8">
@@ -49,7 +49,7 @@
         </div>
 
 
-        <div ng-if="pc.userProjects.length!=0" class="row">
+        <div ng-show="pc.userProjects.length!=0" class="row">
             <div class="row" style="margin-top:15px; margin-bottom:15px;">
                 <div class="col-md-8 borderBottomLine">
                     <h2>Dashboard
@@ -70,7 +70,7 @@
                             <span class="dateDetails title">Date Created</span>
                             <br/>
                             <span class="descriptor">{{pc.selectedProject.projectName}}</span>
-                            <span class="dateDetails descriptor">{{pc.selectedProject.dateCreated}}</span>
+                            <span class="dateDetails descriptor">{{pc.selectedProject.dateCreated | date:'MM/dd/yyyy'}}</span>
                         </p>
                         <p class="borderBottomLine">
                             <span class="title">Project Description</span>
@@ -200,7 +200,7 @@
                                             <span class="dateDetails title">Date Created</span>
                                             <br/>
                                             <span class="descriptor-small">{{project.projectName}}</span>
-                                             <span class="dateDetails descriptor-small">{{project.dateCreated}}</span>
+                                             <span class="dateDetails descriptor-small">{{project.dateCreated | date:'MM/dd/yyyy'}}</span>
                                         </p>
                                         <p>
                                             <span class="title">Project Description</span>
