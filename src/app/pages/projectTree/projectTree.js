@@ -17,7 +17,7 @@ angular.module('BlurAdmin.pages.projectTree', []).controller('ProjectTreeCtrl', 
 		}
 		children.push({
 			"name": "Volume Size: "+project.volume_size+ " GB",
-			"icon": "Volume.png"
+			"icon": "volume.png"
 		})
 
 		var treeData = [

@@ -17,7 +17,7 @@
             icon: 'ion-android-home',
             order: 0,
           },
-          controller: function($scope,$location,$window,DataService){
+          controller: function($scope,$rootScope,$location,$window,DataService){
            $scope.login = function()
           {
             var params = {
@@ -28,6 +28,7 @@
             DataService.postData(urlConstants.LOGIN, params)
             .success(function(data) {
                 $window.localStorage.currentUser = angular.toJson(data);
+                $rootScope.userEmail = params.email;
                 $location.path('/dashboard');
             }).error(function(err){
               console.log("Error logging the User");
