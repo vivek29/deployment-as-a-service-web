@@ -34,8 +34,8 @@
           <tr ng-repeat="service in apcsi.clusterServices">
             <td>{{ $index+1 }}</td>
             <td>{{ service.metadata.name }}</td>
-            <td>{{ service.spec.ports.port }}</td>
-            <td>{{ service.spec.ports.targetPort }}</td>
+            <td>{{ service.spec.ports[0].port }}</td>
+            <td>{{ service.spec.ports[0].targetPort.intVal }}</td>
             <td ng-if="service.spec.type!=undefined">{{ service.spec.type }}</td>
             <td ng-if="service.spec.type===undefined"> - </td>        
       </tr>
@@ -61,10 +61,10 @@
           <tr ng-repeat="deployment in apcsi.clusterDeployments">
             <td>{{ $index+1 }}</td>
             <td>{{ deployment.metadata.name }}</td>
-            <td>{{ deployment.spec.spec.containers.image }}</td>
-            <td>{{ deployment.spec.spec.containers.ports.containerPort }}</td>
-            <td ng-if="deployment.spec.spec.volumes.name!=undefined">{{ deployment.spec.spec.volumes.name }}</td>
-            <td ng-if="deployment.spec.spec.volumes.name===undefined"> - </td>
+            <td>{{ deployment.spec.template.spec.containers[0].image }}</td>
+            <td>{{ deployment.spec.template.spec.containers[0].ports[0].containerPort }}</td>
+            <td ng-if="deployment.spec.template.spec.volumes[0].name!=undefined">{{ deployment.spec.template.spec.volumes[0].name }}</td>
+            <td ng-if="deployment.spec.template.spec.volumes[0].name===undefined"> - </td>
             <td  style= "vertical-align: middle;"><input type="number" ng-value="deployment.spec.replicas" ng-model="apcsi.replicas[$index]" style="width: 40px; height: 30px;"></td>                    
           </tr>
          </tbody> 

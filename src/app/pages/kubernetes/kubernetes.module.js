@@ -19,7 +19,7 @@ var kubernetes = angular.module('BlurAdmin.pages.kubernetes', [])
         });
   }
 
-  kubernetes.controller('KubernetesController', function($scope, $rootScope, $location, DataService, $window,$uibModal) {
+  kubernetes.controller('KubernetesController', function($scope, $rootScope,$sce, $location, DataService, $window,$uibModal) {
 
   var kc = this;
 
@@ -51,6 +51,10 @@ var kubernetes = angular.module('BlurAdmin.pages.kubernetes', [])
     }
     
   };
+
+  $scope.trustSrc = function(src) {
+    return $sce.trustAsResourceUrl(src);
+  }
 
   $scope.cardNumber = 0;
   $scope.selectProject = function($event,index, project) {

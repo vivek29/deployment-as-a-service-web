@@ -115,11 +115,9 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 			apct.downloadKey = true;
 			apct.disableContinue = false;
 
-			// see this also
-			project = angular.toJson(data);
-
+			apct.project = data;
 			// see this once
-			$scope.key = project.Aws_key;
+			$scope.key = apct.project.aws_key;
 
 		}).error(function(err){
 			console.log(err);
@@ -130,9 +128,8 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apct.startDownloadingKey = function(){
 
-		// $scope.key = "jkdfhdsfkkshfsdff";
 		var link = document.createElement('a');
-		link.download = project.projectName+".pem";
+		link.download = apct.project.projectName+".pem";
 		var blob = new Blob([$scope.key], {type: 'text/plain'});
 		link.href = window.URL.createObjectURL(blob);
 		link.click();
@@ -153,7 +150,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	      controllerAs : 'apcf',
 	      resolve : {
 	        project : function() {
-	          return project;
+	          return apct.project;
 	        }
 	      },
 	      backdrop: 'static'
@@ -226,7 +223,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apcfi.next = function(){
 
-		apcfi.project.old_clusterURL = $scope.masterURL;
+		apcfi.project.old_clusterURL = "https://"+$scope.masterURL+":443";
 		apcfi.project.clusterMasterUsername = "admin";
 		apcfi.project.clusterMasterPassword = $scope.clusterPassword;
 
@@ -297,12 +294,15 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 //	apcsi.project = project;    
 
 	apcsi.init = function(){
-
-		DataService.getData(urlConstants.GET_CLUSTER_DETAILS+project.project_id,project)
+		console.log(project);
+		DataService.postData(urlConstants.GET_CLUSTER_DETAILS+project.project_id,project)
 		.success(function(data) {
 
 			// see this
-			project = angular.toJson(data);
+			project = data;
+			console.log(project);
+			console.log(project.services);
+			console.log(project.deployments);
 			apcsi.clusterServices = project.services;
 			apcsi.clusterDeployments = project.deployments;
 
@@ -370,6 +370,11 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	apcse.gotAppURL = false;			
 	apcse.loadingMessage = "Please wait.. Deploying your application..";
 
+	apcse.loadingBlock = true;
+			apcse.disableClose = false;			
+			apcse.loadingMessage = "Your app is now deployed...";
+			apcse.gotAppURL = true;
+
 	apcse.init = function(){
 
 		DataService.postData(urlConstants.DEPLOY_APP+apcse.project.project_id,apcse.project)
@@ -381,7 +386,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 			apcse.gotAppURL = true;			
 
 			// see this also
-			apcse.project = angular.toJson(data);
+			apcse.project = data;
 
 		}).error(function(err){
 			console.log(err);
