@@ -56,7 +56,7 @@
       border-top: 1px solid #1b867b;
       box-shadow: 2px 2px 4px 2px rgba(0, 30, 0, 0.2);
     }
-    
+
     .selector {
      border-top: 28px solid transparent;
      border-bottom: 28px solid transparent;
@@ -309,12 +309,19 @@
     overflow: hidden;
   }
   video {
-    position:absolute;
+    position:relative;
     z-index:-1;
   }
   video.fillWidth {
     width: 100%;
   }
+
+  .overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+}
 }
 
 </style>
