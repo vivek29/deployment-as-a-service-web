@@ -102,9 +102,15 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apct.progressMessage = "This will take some time(approx 30-40 mins)...";
 
+	var mosq = new Mosquitto();
+	var url = "ws://" + "35.163.209.126" + ":" + "8088";
+
 	apct.initAddProject = function(){		
 
 		$scope.currentUser = angular.fromJson($window.localStorage.currentUser);
+
+		// connect to mosquitto and subscribe
+		apct.connectAndSubscribeToMosq();
 
 		DataService.postData(urlConstants.ADD_PROJECT+$scope.currentUser.user_id,project)
 		.success(function(data) {
@@ -116,7 +122,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 			apct.disableContinue = false;
 
 			apct.project = data;
-			// see this once
+
 			$scope.key = apct.project.aws_key;
 
 		}).error(function(err){
@@ -125,6 +131,65 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 		});		
 
 	}
+
+	// connect to mosquitto and subscribe to topic(OrgName/User_ID/1 & OrgName/User_ID/2)
+	apct.connectAndSubscribeToMosq = function(){
+		
+		mosq.connect(url);
+
+        mosq.onconnect = function(rc){
+            console.log("Mosq Connection Successful");
+            mosq.subscribe($scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/1", 0);
+            mosq.subscribe($scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/2", 0);
+        };
+
+	}
+
+	mosq.onmessage = function(topic, payload, qos){
+
+        console.log(topic);
+
+        // progress here
+        if(topic==$scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/1"){            	
+        	apct.progressMessage = payload;
+        	$scope.$apply();
+        }
+
+        // update cluster master, send to server here
+        if(topic==$scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/2"){
+        	var arrayOfLines = payload.split("\n");
+			var string1 = "server";
+			var string2 = "password";
+			var finalArray = [];
+
+			for(var i = 0;i < arrayOfLines.length;i++){
+			  
+			  if(arrayOfLines[i].indexOf(string1) !== -1){
+			  	finalArray.push(arrayOfLines[i].trim().slice(16));
+			  }	
+
+			  if(arrayOfLines[i].indexOf(string2) !== -1)
+			  	finalArray.push(arrayOfLines[i].trim().slice(10));
+			}
+			console.log(finalArray[0]);
+			console.log(finalArray[1]);
+
+			apct.project.project_url = finalArray[0];
+			apct.project.project_username = "admin";
+			apct.project.project_password = finalArray[1];
+
+			// update server with cluster ip and password
+			DataService.postData(urlConstants.UPDATE_CLUSTER_MASTER+apct.project.project_id,apct.project)
+			.success(function(data) {
+
+				apct.project = data;
+			}).error(function(err){
+				console.log(err);
+			});
+
+        }
+     
+    };
 
 	apct.startDownloadingKey = function(){
 

@@ -102,6 +102,13 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
 */
     DataService.getData(urlConstants.DAAS_USER+pc.currentUser.user_id+"/projects",[])
     .success(function(data) {
+
+      // sort projects by recently created
+      data.sort(function(a, b){
+        return a.dateCreated - b.dateCreated
+      });
+      data.reverse();      
+
       pc.userProjects = data;
       pc.selectedProject = pc.userProjects[0];
 

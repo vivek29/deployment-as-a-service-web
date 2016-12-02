@@ -13,7 +13,8 @@ var urlConstants = {
 	"ADD_PROJECT" : hostName+"/daas/project/add/",
 	"GET_CLUSTER_DETAILS" : hostName+"/daas/project/clusterDetails/",
 	"DEPLOY_APP" : hostName+"/daas/project/deployApp/",
-	"DELETE_PROJECT" : hostName+"/daas/project/delete/"
+	"DELETE_PROJECT" : hostName+"/daas/project/delete/",
+	"UPDATE_CLUSTER_MASTER": hostName+"/daas/project/updateClusterMaster/"
 };
 
 
