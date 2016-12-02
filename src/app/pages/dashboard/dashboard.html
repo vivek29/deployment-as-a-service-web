@@ -125,11 +125,11 @@
                         </table>
                         <table style="width:100%">
                             <tr>
-                                <td>
+                                <td style="width: 65%;padding-right: 10px;">
                                     <p ng-if="pc.selectedProject.app_url!=undefined" class="descriptor">
                                         <span class="title">App URL</span>
                                         <br/>
-                                        <span class="descriptor" style="font-size:small;">{{pc.selectedProject.app_url}}</span> <a href="{{pc.selectedProject.app_url}}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>                                       
+                                        <span class="descriptor" style="font-size:small;">{{pc.selectedProject.app_url}} &nbsp;</span> <a href="{{pc.selectedProject.app_url}}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>                                       
                                     </p>
                                     <p ng-if="pc.selectedProject.app_url===undefined" style="margin-top:10px;">
                                         <button class="btn btn-primary btn-sm" ng-click="pc.deployApp(pc.selectedProject)">
@@ -158,7 +158,7 @@
                 </div>
                 <div class="panel panel-default bootstrap-panel  animated zoomIn">
                     <div class="panel-body borderBottom">
-                        <p class="borderBottomLine" style="color:#1b867b;">CPU Utilization</p>
+                        <p class="borderBottomLine" style="color:#1b867b;">CPU Utilization &nbsp; <a href="{{pc.cpuUtilUrl}}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a> </p>
 
                         <p>
                             <iframe ng-src="{{trustSrc(pc.cpuUtilUrl)}}" height="300" width="100%"></iframe>
@@ -167,7 +167,7 @@
                 </div>
                 <div class="panel panel-default bootstrap-panel  animated zoomIn">
                     <div class="panel-body borderBottom">
-                        <p class="borderBottomLine" style="color:#1b867b;">Memory Utilization</p>
+                        <p class="borderBottomLine" style="color:#1b867b;">Memory Utilization &nbsp; <a href="{{pc.memoryUtilUrl}}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a> </p>
                         <p>
                             <iframe ng-src="{{trustSrc(pc.memoryUtilUrl)}}" height="300" width="100%"></iframe>
                         </p>
