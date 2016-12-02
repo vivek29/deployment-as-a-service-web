@@ -102,9 +102,15 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apct.progressMessage = "This will take some time(approx 30-40 mins)...";
 
+	var mosq = new Mosquitto();
+	var url = "ws://" + "35.163.209.126" + ":" + "8088";
+
 	apct.initAddProject = function(){		
 
 		$scope.currentUser = angular.fromJson($window.localStorage.currentUser);
+
+		// connect to mosquitto and subscribe
+		apct.connectAndSubscribeToMosq();
 
 		DataService.postData(urlConstants.ADD_PROJECT+$scope.currentUser.user_id,project)
 		.success(function(data) {
@@ -115,11 +121,9 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 			apct.downloadKey = true;
 			apct.disableContinue = false;
 
-			// see this also
-			project = angular.toJson(data);
+			apct.project = data;
 
-			// see this once
-			$scope.key = project.Aws_key;
+			$scope.key = apct.project.aws_key;
 
 		}).error(function(err){
 			console.log(err);
@@ -128,11 +132,69 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	}
 
+	// connect to mosquitto and subscribe to topic(OrgName/User_ID/1 & OrgName/User_ID/2)
+	apct.connectAndSubscribeToMosq = function(){
+		
+		mosq.connect(url);
+
+        mosq.onconnect = function(rc){
+            console.log("Mosq Connection Successful");
+            mosq.subscribe($scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/1", 0);
+            mosq.subscribe($scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/2", 0);
+        };
+
+	}
+
+	mosq.onmessage = function(topic, payload, qos){
+
+        console.log(topic);
+
+        // progress here
+        if(topic==$scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/1"){            	
+        	apct.progressMessage = payload;
+        	$scope.$apply();
+        }
+
+        // update cluster master, send to server here
+        if(topic==$scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/2"){
+        	var arrayOfLines = payload.split("\n");
+			var string1 = "server";
+			var string2 = "password";
+			var finalArray = [];
+
+			for(var i = 0;i < arrayOfLines.length;i++){
+			  
+			  if(arrayOfLines[i].indexOf(string1) !== -1){
+			  	finalArray.push(arrayOfLines[i].trim().slice(16));
+			  }	
+
+			  if(arrayOfLines[i].indexOf(string2) !== -1)
+			  	finalArray.push(arrayOfLines[i].trim().slice(10));
+			}
+			console.log(finalArray[0]);
+			console.log(finalArray[1]);
+
+			apct.project.project_url = finalArray[0];
+			apct.project.project_username = "admin";
+			apct.project.project_password = finalArray[1];
+
+			// update server with cluster ip and password
+			DataService.postData(urlConstants.UPDATE_CLUSTER_MASTER+apct.project.project_id,apct.project)
+			.success(function(data) {
+
+				apct.project = data;
+			}).error(function(err){
+				console.log(err);
+			});
+
+        }
+     
+    };
+
 	apct.startDownloadingKey = function(){
 
-		// $scope.key = "jkdfhdsfkkshfsdff";
 		var link = document.createElement('a');
-		link.download = project.projectName+".pem";
+		link.download = apct.project.projectName+".pem";
 		var blob = new Blob([$scope.key], {type: 'text/plain'});
 		link.href = window.URL.createObjectURL(blob);
 		link.click();
@@ -153,7 +215,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	      controllerAs : 'apcf',
 	      resolve : {
 	        project : function() {
-	          return project;
+	          return apct.project;
 	        }
 	      },
 	      backdrop: 'static'
@@ -226,7 +288,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apcfi.next = function(){
 
-		apcfi.project.old_clusterURL = $scope.masterURL;
+		apcfi.project.old_clusterURL = "https://"+$scope.masterURL+":443";
 		apcfi.project.clusterMasterUsername = "admin";
 		apcfi.project.clusterMasterPassword = $scope.clusterPassword;
 
@@ -297,12 +359,15 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 //	apcsi.project = project;    
 
 	apcsi.init = function(){
-
-		DataService.getData(urlConstants.GET_CLUSTER_DETAILS+project.project_id,project)
+		console.log(project);
+		DataService.postData(urlConstants.GET_CLUSTER_DETAILS+project.project_id,project)
 		.success(function(data) {
 
 			// see this
-			project = angular.toJson(data);
+			project = data;
+			console.log(project);
+			console.log(project.services);
+			console.log(project.deployments);
 			apcsi.clusterServices = project.services;
 			apcsi.clusterDeployments = project.deployments;
 
@@ -370,6 +435,11 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	apcse.gotAppURL = false;			
 	apcse.loadingMessage = "Please wait.. Deploying your application..";
 
+	apcse.loadingBlock = true;
+			apcse.disableClose = false;			
+			apcse.loadingMessage = "Your app is now deployed...";
+			apcse.gotAppURL = true;
+
 	apcse.init = function(){
 
 		DataService.postData(urlConstants.DEPLOY_APP+apcse.project.project_id,apcse.project)
@@ -381,7 +451,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 			apcse.gotAppURL = true;			
 
 			// see this also
-			apcse.project = angular.toJson(data);
+			apcse.project = data;
 
 		}).error(function(err){
 			console.log(err);

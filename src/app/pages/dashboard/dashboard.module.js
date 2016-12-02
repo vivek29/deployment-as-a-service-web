@@ -20,7 +20,7 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
         });
   }
 
-  dashboard.controller('ProjectController', function($scope, $rootScope, $location, DataService, $window,$uibModal) {
+  dashboard.controller('ProjectController', function($scope, $rootScope,$sce, $location, DataService, $window,$uibModal) {
 
   var pc = this;
 
@@ -102,19 +102,31 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
 */
     DataService.getData(urlConstants.DAAS_USER+pc.currentUser.user_id+"/projects",[])
     .success(function(data) {
+
+      // sort projects by recently created
+      data.sort(function(a, b){
+        return a.dateCreated - b.dateCreated
+      });
+      data.reverse();      
+
       pc.userProjects = data;
       pc.selectedProject = pc.userProjects[0];
 
-      // TODO: 
-      // pc.cpuUtilUrl = "https://";
-      // pc.memoryUtilUrl = "https://";
+      // TODO:
+       if(pc.userProjects.length!=0){
+          pc.cpuUtilUrl = "https://"+pc.selectedProject.project_username+":"+pc.selectedProject.project_password+"@"+pc.selectedProject.project_url+"/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/dashboard/db/cluster?var-nodename=&panelId=3&fullscreen";
+          pc.memoryUtilUrl = "https://"+pc.selectedProject.project_username+":"+pc.selectedProject.project_password+"@"+pc.selectedProject.project_url+"/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/dashboard/db/cluster?var-nodename=&panelId=1&fullscreen";
+       } 
 
-      console.log(pc.userProjects);
       $rootScope.userAllProjects = pc.userProjects;
     }).error(function(err){
       console.log(err);
     });
   };
+
+  $scope.trustSrc = function(src) {
+    return $sce.trustAsResourceUrl(src);
+  }
 
   $rootScope.$on("GetUserProjects", function(){
      pc.getUserProjects();
