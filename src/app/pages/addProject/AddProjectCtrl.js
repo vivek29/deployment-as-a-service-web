@@ -157,26 +157,18 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
         // update cluster master, send to server here
         if(topic==$scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/2"){
-        	var arrayOfLines = payload.split("\n");
-			var string1 = "server";
-			var string2 = "password";
-			var finalArray = [];
+        	
+        	var server = payload.indexOf("server");
+        	var name = payload.indexOf("name");
+        	var clusterUrl = payload.substring(server+16,name);
 
-			for(var i = 0;i < arrayOfLines.length;i++){
-			  
-			  if(arrayOfLines[i].indexOf(string1) !== -1){
-			  	finalArray.push(arrayOfLines[i].trim().slice(16));
-			  }	
+        	var password = payload.indexOf("password");
+        	var username = payload.indexOf("username");
+        	var clusterPass = payload.substring(password+10,username);
 
-			  if(arrayOfLines[i].indexOf(string2) !== -1)
-			  	finalArray.push(arrayOfLines[i].trim().slice(10));
-			}
-			console.log(finalArray[0]);
-			console.log(finalArray[1]);
-
-			apct.project.project_url = finalArray[0];
+			apct.project.project_url = clusterUrl;
 			apct.project.project_username = "admin";
-			apct.project.project_password = finalArray[1];
+			apct.project.project_password = clusterPass;
 
 			// update server with cluster ip and password
 			DataService.postData(urlConstants.UPDATE_CLUSTER_MASTER+apct.project.project_id,apct.project)
@@ -198,7 +190,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 		var blob = new Blob([$scope.key], {type: 'text/plain'});
 		link.href = window.URL.createObjectURL(blob);
 		link.click();
-	}
+	};
 
 	apct.cancel = function(){
 		$uibModalInstance.dismiss();
