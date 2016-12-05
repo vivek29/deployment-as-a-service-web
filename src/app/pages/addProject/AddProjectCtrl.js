@@ -4,14 +4,16 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	var apco = this;
 
-	apco.userProjects = $rootScope.userAllProjects;
+	apco.currentUser = angular.fromJson($window.localStorage.currentUser);
 
-	if(apco.userProjects.length ==0) {
+	if(apco.currentUser.managementEC2InstanceId === "TEMP_ID"){
 		apco.isFirstProject = true;
 	}
 	else{
-		apco.isFirstProject = false;
+		apco.isFirstProject = false;		
 	}
+
+	apco.userProjects = $rootScope.userAllProjects;
 
 	apco.cancel = function(){
 		$uibModalInstance.dismiss();			
@@ -25,7 +27,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
             cloudProvider: "AWS",
             cloud_access_key: $scope.awsAccessKey,
             cloud_secret_key: $scope.awsSecretKey,
-            Aws_key : $scope.awsKey
+            aws_key : $scope.awsKey
         };
 
 		$uibModalInstance.dismiss();
@@ -66,7 +68,13 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 		project.master_size = $scope.masterSize;
 		project.node_size = $scope.nodeSize;
 		project.node_numbers = $scope.nodeNumbers;
-		project.volume_size = $scope.volumeSize;
+
+		if($scope.volOption == 'volSize'){
+			project.volume_size = document.getElementsByName('volumeSize')[0].value;		
+		}
+		if($scope.volOption == 'volId'){
+			project.volume_id  = "vol-"+ document.getElementsByName('volumeId')[0].value;
+		}
 
 		$uibModalInstance.dismiss();
 
@@ -88,7 +96,6 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	      //modal exited
 	    });
 
-
 	};
 })
 .controller('AddProjectCtrlThird', function($scope,$rootScope,$uibModal,$uibModalInstance,DataService, project, $window) {
@@ -99,6 +106,8 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	apct.loadingBlock = false;
 	apct.projectReadyMessage = false;
 	apct.pm = false;
+	apct.project = project;
+	apct.updateClusterProject = project;
 
 	apct.progressMessage = "This will take some time(approx 30-40 mins)...";
 
@@ -108,22 +117,38 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	apct.initAddProject = function(){		
 
 		$scope.currentUser = angular.fromJson($window.localStorage.currentUser);
-
+		apct.currentUser = $scope.currentUser;
 		// connect to mosquitto and subscribe
 		apct.connectAndSubscribeToMosq();
 
-		DataService.postData(urlConstants.ADD_PROJECT+$scope.currentUser.user_id,project)
+		DataService.postData(urlConstants.ADD_PROJECT+$scope.currentUser.user_id,apct.project)
 		.success(function(data) {
 
 			apct.loadingBlock = true;
 			apct.pm = true;
 			apct.projectReadyMessage = true;
-			apct.downloadKey = true;
+
+			if(apct.currentUser.managementEC2InstanceId === "TEMP_ID"){
+				apct.downloadKey = true;
+			}
+			
 			apct.disableContinue = false;
 
 			apct.project = data;
 
+			apct.project.project_url = apct.updateClusterProject.project_url;
+			apct.project.project_username = "admin";
+			apct.project.project_password = apct.updateClusterProject.project_password;			
+
 			$scope.key = apct.project.aws_key;
+
+			// update server with cluster ip and password
+			DataService.postData(urlConstants.UPDATE_CLUSTER_MASTER+apct.project.project_id,apct.project)
+			.success(function(data) {
+				apct.project = data;
+			}).error(function(err){
+				console.log(err);
+			});
 
 		}).error(function(err){
 			console.log(err);
@@ -141,13 +166,17 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
             console.log("Mosq Connection Successful");
             mosq.subscribe($scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/1", 0);
             mosq.subscribe($scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/2", 0);
+
+            setInterval(publishToKeepConn, 10000);
         };
 
 	}
 
-	mosq.onmessage = function(topic, payload, qos){
+	function publishToKeepConn(topic,qos,payload)  {
+        mosq.publish("Org/User", "Ignore this message", 0);
+    }
 
-        console.log(topic);
+	mosq.onmessage = function(topic, payload, qos){
 
         // progress here
         if(topic==$scope.currentUser.organization+"/"+$scope.currentUser.user_id+"/1"){            	
@@ -165,19 +194,12 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
         	var password = payload.indexOf("password");
         	var username = payload.indexOf("username");
         	var clusterPass = payload.substring(password+10,username);
+        	console.log(clusterUrl+","+clusterPass);
+        	console.log(apct.project);
 
-			apct.project.project_url = clusterUrl;
-			apct.project.project_username = "admin";
-			apct.project.project_password = clusterPass;
-
-			// update server with cluster ip and password
-			DataService.postData(urlConstants.UPDATE_CLUSTER_MASTER+apct.project.project_id,apct.project)
-			.success(function(data) {
-
-				apct.project = data;
-			}).error(function(err){
-				console.log(err);
-			});
+			apct.updateClusterProject.project_url = clusterUrl;
+			apct.updateClusterProject.project_username = "admin";
+			apct.updateClusterProject.project_password = clusterPass;
 
         }
      
@@ -230,6 +252,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apcf.cancel = function(){
 		$uibModalInstance.dismiss();
+		$rootScope.$emit("GetUserProjects", {});
 	};
 
 	apcf.deployAppExisting = function(){
@@ -259,12 +282,10 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apcf.deployAppManually = function(){
 
-		$uibModalInstance.dismiss();
-
 		// update projects on dashboard
 		$rootScope.$emit("GetUserProjects", {});
-
-		$location.path("/kubernetes");
+		$uibModalInstance.dismiss();
+//		$location.path("/kubernetes");
 	};
 
 })
@@ -276,6 +297,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apcfi.cancel = function(){
 		$uibModalInstance.dismiss();
+		$rootScope.$emit("GetUserProjects", {});
 	};
 
 	apcfi.next = function(){
@@ -380,6 +402,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apcsi.cancel = function(){
 		$uibModalInstance.dismiss();
+		$rootScope.$emit("GetUserProjects", {});
 	};
 
 	apcsi.deployApp = function(){
@@ -427,13 +450,8 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 	apcse.gotAppURL = false;			
 	apcse.loadingMessage = "Please wait.. Deploying your application..";
 
-	apcse.loadingBlock = true;
-			apcse.disableClose = false;			
-			apcse.loadingMessage = "Your app is now deployed...";
-			apcse.gotAppURL = true;
-
 	apcse.init = function(){
-
+		console.log(apcse.project);
 		DataService.postData(urlConstants.DEPLOY_APP+apcse.project.project_id,apcse.project)
 		.success(function(data) {
 
@@ -453,6 +471,7 @@ angular.module('BlurAdmin.pages.addProject', []).controller('AddProjectCtrlOne',
 
 	apcse.cancel = function(){
 		$uibModalInstance.dismiss();
+		$rootScope.$emit("GetUserProjects", {});
 	};
 
 });

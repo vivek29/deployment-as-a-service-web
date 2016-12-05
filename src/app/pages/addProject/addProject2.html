@@ -77,31 +77,49 @@
           <div ng-message="required">
             You must select the Number of Nodes.            
           </div>
+          <div ng-message="min"> Please select a valid input(>=1)
+          </div>
         </div>
       </div>
       <div class="row">  
         <div class="col-xs-12"separator>&nbsp;</div>
       </div>
       <div class="row">  
-        <div class="col-xs-3 formLabel" style="color:#1b867b;">Disk Size </div>
+        <div class="col-xs-3 formLabel" style="color:#1b867b;">Volume </div>
         <div class="col-xs-1">:</div>
-        <div class="col-xs-3 form-group"
-          ng-class="{'has-error' : addProjectForm.volumeSize.$invalid && addProjectForm.volumeSize.$dirty }">
-          <input class="form-control" type="number" name="volumeSize" min="1" ng-model="volumeSize" required>
+        <div class="col-xs-4 form-group">
+          <input type = "radio" name = "volOption" value = "volSize" ng-checked = "checked" ng-model="volOption" /> Vol Size &nbsp;
+
+          <input type = "radio" name = "volOption" value = "volId" ng-model="volOption"/> Vol Id          
         </div>
-        <div class="col-xs-5 formLabel">
-           <p style="margin-left:-25px";>GB<p>
-           </div>
-         </div>
+        <div class="col-xs-4 form-group">
+          <div class="input-group" ng-if="volOption == 'volSize'" >
+            <input type="number" name="volumeSize" min="1" ng-model="volumeSize" class="form-control" aria-describedby="basic-addon1" required>
+            <span class="input-group-addon" id="basic-addon1">GB</span>
+          </div>
+
+          <div class="input-group" ng-if="volOption == 'volId'">
+            <span class="input-group-addon" id="basic-addon1" required>vol-</span>
+            <input type="text" name="volumeId" ng-model="volumeId" class="form-control" aria-describedby="basic-addon1" required>
+          </div>
+
+        </div>
+      </div>
       <div class="row">
 
         <div class="col-xs-3"></div>
         <div class="col-xs-1"></div>
         <div class="col-xs-8 help-block text-danger"
           ng-messages="addProjectForm.volumeSize.$error" role="alert"
-          ng-if="addProjectForm.volumeSize.$dirty">
-            <div ng-message="required">You must select the disk size
+          ng-if="addProjectForm.volumeSize.$dirty && volOption == 'volSize'">
+            <div ng-message="required">You must select the Volume Size</div>
+            <div ng-if="volOption == 'volSize'" ng-message="min"> Please select a valid input(>=1)
             </div>
+        </div>
+        <div class="col-xs-8 help-block text-danger"
+          ng-messages="addProjectForm.volumeId.$error" role="alert"
+          ng-if="addProjectForm.volumeId.$dirty && volOption == 'volId'">
+            <div ng-message="required">You must select the Volume Id</div>
         </div>
 </div>
       <div class="row">

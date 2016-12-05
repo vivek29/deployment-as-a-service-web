@@ -129,7 +129,7 @@
                                     <p ng-if="pc.selectedProject.app_url!=undefined" class="descriptor">
                                         <span class="title">App URL</span>
                                         <br/>
-                                        <span class="descriptor" style="font-size:small;">{{pc.selectedProject.app_url}} &nbsp;</span> <a href="{{pc.selectedProject.app_url}}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>                                       
+                                        <span class="descriptor" style="font-size:small;">{{pc.selectedProject.app_url}} &nbsp;</span> <a href="http://{{pc.selectedProject.app_url}}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>                                       
                                     </p>
                                     <p ng-if="pc.selectedProject.app_url===undefined" style="margin-top:10px;">
                                         <button class="btn btn-primary btn-sm" ng-click="pc.deployApp(pc.selectedProject)">

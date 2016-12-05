@@ -15,7 +15,7 @@
 
   <h4 style = "text-align:center; margin-bottom:25px;">{{apcse.loadingMessage}}</h4>
 
-  <h4 ng-show="apcse.gotAppURL" style="text-align: center;"> Access your application at - <a href="{{apcse.project.app_url}}" target="_blank">{{apcse.project.app_url}}</a> </h4>
+  <h4 ng-show="apcse.gotAppURL" style="text-align: center;"> Access your application at - <a href="http://{{apcse.project.app_url}}" target="_blank">{{apcse.project.app_url}}</a> </h4>
    
   <div class="modal-footer">
     <button class="btn btn-danger" ng-disabled="apcse.disableClose" ng-click="apcse.cancel()">Close</button>

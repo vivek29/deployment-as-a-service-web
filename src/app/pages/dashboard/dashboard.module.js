@@ -112,13 +112,13 @@ var dashboard = angular.module('BlurAdmin.pages.dashboard', [])
       pc.userProjects = data;
       pc.selectedProject = pc.userProjects[0];
 
-      // TODO:
        if(pc.userProjects.length!=0){
           pc.cpuUtilUrl = "https://"+pc.selectedProject.project_username+":"+pc.selectedProject.project_password+"@"+pc.selectedProject.project_url+"/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/dashboard/db/cluster?var-nodename=&panelId=3&fullscreen";
           pc.memoryUtilUrl = "https://"+pc.selectedProject.project_username+":"+pc.selectedProject.project_password+"@"+pc.selectedProject.project_url+"/api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/dashboard/db/cluster?var-nodename=&panelId=1&fullscreen";
        } 
 
       $rootScope.userAllProjects = pc.userProjects;
+
     }).error(function(err){
       console.log(err);
     });

@@ -4,10 +4,49 @@
 	</h3>
 </div>
 <div class="modal-body">
-	Are you sure you want to delete the project? It will bring down the kubernetes cluster and remove all the associated resources attached with it.
+	<div ng-hide="dpc.initialBlock">
+		<h4 style="text-align: center;">Are you sure you want to delete the project?</h4></br> Please upload the Management Server key to bring down the kubernetes cluster and remove all the associated resources attached with it.
+
+		<div class="row" style="margin-top: 30px;">
+			<form method="post" name="addProjectForm"
+	      novalidate>
+		        <div class="col-xs-3" style="color:#1b867b;">Upload Mgmt. Server Key</div>
+		        <div class="col-xs-1">:</div>
+		        <div class="col-xs-8 form-group has-feedback"
+		          ng-class="{'has-error' : addProjectForm.awsKey.$invalid && addProjectForm.awsKey.$dirty }">
+		          <input class="form-control" type="file" name="awsKey"
+		            file-reader="awsKey" required />  
+		        </div>
+
+		        <div class="col-xs-3"></div>
+		        <div class="col-xs-1"></div>
+		        <div class="col-xs-8 help-block text-danger"
+		          ng-messages="addProjectForm.awsKey.$error" role="alert"
+		          ng-if="addProjectForm.awsKey.$dirty">
+		          <div ng-message="required">Your must upload the Management Server's key
+		          </div>
+		        </div>
+		    </form>    
+	    </div>
+	</div> 
+
+	<div class="loadingContainer" ng-hide="dpc.loadingBlock">
+      <div class="ex"></div>
+      <div class="ex"></div>
+      <div class="ex"></div>
+      <div class="ex"></div>      
+    </div> 
+    <h4 ng-hide="dpc.loadingBlock" style = "text-align:center; margin-bottom:25px;">Deleting project...</h4>  
+
+	<div ng-hide="dpc.deletedConfirmed">
+		<h4 style="text-align: center;">Your project, {{dpc.project.projectName}} has been deleted and all the related resources have been released.</br>
+			<h5 style="margin-top: 25px;margin-left: 41px;">Note: The volume(EBS), {{dpc.project.volume_id}} is still available.</h5>
+	</div>
+
+
 </div>
 <div class="modal-footer" align="center">
 
-	<button class="btn btn-danger" ng-click="dpc.okay()">Yes</button>
-	<button class="btn btn-primary" ng-click="dpc.cancel()">Cancel</button>
+	<button class="btn btn-danger" ng-disabled="dpc.disableBtn" ng-hide="dpc.deleteKey" ng-click="dpc.okay()">Delete</button>
+	<button class="btn btn-primary" ng-disabled="dpc.disableBtn" ng-click="dpc.cancel()">Close</button>
 </div>
