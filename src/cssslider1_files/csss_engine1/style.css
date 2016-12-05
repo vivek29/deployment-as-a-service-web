@@ -35,12 +35,13 @@
   line-height: 0;
   margin: 0 auto;
   padding: 0;
-  
+
   overflow: hidden;
   white-space: nowrap;
 }
 .csslider1 > ul > .cs_skeleton {
   width: 100%;
+	height: 450px;
   visibility: hidden;
   font-size: 0px;
   line-height: 0;
@@ -132,19 +133,19 @@
 .csslider1 > #cs_slide1_0:checked ~ .cs_arrowprev > label.num4,
 .csslider1 > #cs_pause1_0:checked ~ .cs_arrowprev > label.num4,
 .csslider1 > #cs_slide1_0:checked ~ .cs_arrownext > label.num1,
-.csslider1 > #cs_pause1_0:checked ~ .cs_arrownext > label.num1, 
+.csslider1 > #cs_pause1_0:checked ~ .cs_arrownext > label.num1,
 .csslider1 > #cs_slide1_1:checked ~ .cs_arrowprev > label.num0,
 .csslider1 > #cs_pause1_1:checked ~ .cs_arrowprev > label.num0,
 .csslider1 > #cs_slide1_1:checked ~ .cs_arrownext > label.num2,
-.csslider1 > #cs_pause1_1:checked ~ .cs_arrownext > label.num2, 
+.csslider1 > #cs_pause1_1:checked ~ .cs_arrownext > label.num2,
 .csslider1 > #cs_slide1_2:checked ~ .cs_arrowprev > label.num1,
 .csslider1 > #cs_pause1_2:checked ~ .cs_arrowprev > label.num1,
 .csslider1 > #cs_slide1_2:checked ~ .cs_arrownext > label.num3,
-.csslider1 > #cs_pause1_2:checked ~ .cs_arrownext > label.num3, 
+.csslider1 > #cs_pause1_2:checked ~ .cs_arrownext > label.num3,
 .csslider1 > #cs_slide1_3:checked ~ .cs_arrowprev > label.num2,
 .csslider1 > #cs_pause1_3:checked ~ .cs_arrowprev > label.num2,
 .csslider1 > #cs_slide1_3:checked ~ .cs_arrownext > label.num4,
-.csslider1 > #cs_pause1_3:checked ~ .cs_arrownext > label.num4, 
+.csslider1 > #cs_pause1_3:checked ~ .cs_arrownext > label.num4,
 .csslider1 > #cs_slide1_4:checked ~ .cs_arrowprev > label.num3,
 .csslider1 > #cs_pause1_4:checked ~ .cs_arrowprev > label.num3,
 .csslider1 > #cs_slide1_4:checked ~ .cs_arrownext > label.num0,
@@ -356,7 +357,7 @@
 .csslider1 > ul > .slide.num4 {
   left: 400%;
 }
- 
+
 
 
 .csslider1 > #cs_slide1_0:checked ~ ul > .slide,
@@ -384,7 +385,7 @@
   -webkit-transform: translateX(-400%);
   transform: translateX(-400%);
 }
- 
+
 
 
 .csslider1 > ul > .slide {
@@ -397,7 +398,7 @@
   -webkit-transition: -webkit-transform 2000ms;
   transition: -webkit-transform 2000ms, transform 2000ms;
 
-  
+
   -webkit-transform: scale(1);
   transform: scale(1);
 }
@@ -410,7 +411,7 @@
   40%, 55%  { -webkit-transform: translateX(-200%); transform: translateX(-200%); }
   60%, 75%  { -webkit-transform: translateX(-300%); transform: translateX(-300%); }
   80%, 95%  { -webkit-transform: translateX(-400%); transform: translateX(-400%); }
-  
+
 }
 @keyframes slide1 {
   0%, 15%  { -webkit-transform: translateX(0%); transform: translateX(0%); }
@@ -418,7 +419,7 @@
   40%, 55%  { -webkit-transform: translateX(-200%); transform: translateX(-200%); }
   60%, 75%  { -webkit-transform: translateX(-300%); transform: translateX(-300%); }
   80%, 95%  { -webkit-transform: translateX(-400%); transform: translateX(-400%); }
-  
+
 }
 
 @-webkit-keyframes slide1-ie {
@@ -427,7 +428,7 @@
   40%, 55%  { margin-left: -200%; }
   60%, 75%  { margin-left: -300%; }
   80%, 95%  { margin-left: -400%; }
-  
+
 }
 @keyframes slide1-ie {
   0%, 15%  { margin-left: 0%; }
@@ -435,14 +436,14 @@
   40%, 55%  { margin-left: -200%; }
   60%, 75%  { margin-left: -300%; }
   80%, 95%  { margin-left: -400%; }
-  
+
 }
 
 .csslider1  > #cs_play1:checked ~ ul > .slide {
-  
+
   -webkit-animation: slide1 40000ms infinite;
   animation: slide1 40000ms infinite;
-  
+
 }
 /* IE 10+ hack - cant animate translate :( */
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
@@ -495,14 +496,13 @@
 .csslider1 > .cs_arrowprev > label,
 .csslider1 > .cs_arrownext > label {
   padding: 17px;
-  height: 23px;
+	padding-top: 10px;
+  height: 17px;
   width: 23px;
   margin-top: -28px;
   margin-left: -28px;
-
-  background-color: #CBECFD;
-
-  border-radius: 50%;
+  background-color: #209e91;
+  //border-radius: 50%;
 }
 .csslider1 > .cs_arrowprev > label,
 .csslider1 > .cs_arrownext > label,
@@ -517,7 +517,7 @@
 }
 .csslider1 > .cs_arrownext {
   margin-right: 2px;
-  right: 45px;
+  right: 25px;
 }
 .csslider1 > .cs_arrowprev > label span,
 .csslider1 > .cs_arrownext > label span {
@@ -706,14 +706,14 @@ _:-ms-input-placeholder, :root .csslider1 > .cs_play_pause > label span:after {
 .csslider1 > .cs_bullets > label > .cs_thumb:before {
   content: '';
   position: absolute;
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   left: 50%;
   margin-left: -4px;
   bottom: -9px;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  
+
   border-top: 7px solid #CBECFD;
 }
 .csslider1 > .cs_bullets > label:hover > .cs_thumb {
@@ -1229,7 +1229,7 @@ only screen and (   max--moz-device-pixel-ratio: 2)      and (max-width: 480px),
 only screen and (     -o-max-device-pixel-ratio: 2/1)    and (max-width: 480px),
 only screen and (        max-device-pixel-ratio: 2)      and (max-width: 480px),
 only screen and (                max-resolution: 192dpi) and (max-width: 480px),
-only screen and (                max-resolution: 2dppx)  and (max-width: 480px) { 
+only screen and (                max-resolution: 2dppx)  and (max-width: 480px) {
   .csslider1 > .cs_description,
   .csslider1 > .cs_bullets {
     display: none;
