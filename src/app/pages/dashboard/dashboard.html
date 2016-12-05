@@ -75,7 +75,9 @@
                         <p class="borderBottomLine">
                             <span class="title">Project Description</span>
                             <br/>
-                            <span class="descriptor"> {{pc.selectedProject.description}}</span>
+                            <span class="descriptor"> {{pc.selectedProject.description}}</span> <a href="#" class="btn btn-primary btn-sm" ng-click="pc.openTree(pc.selectedProject)" style="float:right;">
+                             <i class="dateDetails fa fa-link fa-spin fa-lg" aria-hidden="true"></i>
+                            </a>          
                         </p>
                         <table style="width:100%;">
                             <tr>
@@ -116,9 +118,9 @@
                                 </td>
                                 <td>
                                     <p>
-                                        <a href="#" class="btn btn-primary btn-sm" ng-click="pc.openTree(pc.selectedProject)">
-                                         <i class="fa fa-link fa-spin fa-lg" aria-hidden="true"></i>
-                                        </a>
+                                        <span class="title">Volume Id</span>
+                                        <br/>
+                                        <span class="descriptor">{{pc.selectedProject.volume_id}} </span>
                                     </p>
                                 </td>
                             </tr>
